@@ -45,6 +45,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 gem 'elasticsearch'
+gem 'json'
 
 #调试
 group :development do

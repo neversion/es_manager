@@ -152,6 +152,7 @@ DEPENDENCIES
   elasticsearch
   jbuilder (~> 1.2)
   jquery-rails
+  json
   meta_request
   pry
   pry-nav
