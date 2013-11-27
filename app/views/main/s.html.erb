@@ -1,0 +1,7 @@
+<h1>Main#s</h1>
+<p>Find me in app/views/main/s.html.erb</p>
+<%= form_tag main_s_path, method:'get' do %>
+    <%= text_field_tag :q %>
+    <%= submit_tag "search" %>
+<% end %>
+<%= @result %>
