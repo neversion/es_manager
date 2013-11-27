@@ -7,7 +7,7 @@ class MainController < ApplicationController
   def s
     @result={}
     if params[:q]
-      @result = search_with_facet(params[:q],1,5,'create_timestamp')
+      @result = search_with_facet(params[:q], 1, 5, 'create_timestamp')
     end
     respond_to do |format|
       format.html # index.html.erb
@@ -16,18 +16,7 @@ class MainController < ApplicationController
   end
 
   private
-  def index
-  @client.index index: 'znss',
-             type: 'item',
-             body: {
-              title: 'Test 1',
-              tags: ['y', 'z'],
-              published: true,
-              published_at: Time.now.utc.iso8601,
-              counter: 1
-            }
 
-  end
   def mapping
     @client.indices.create index: 'znss',
                            body: {
@@ -68,25 +57,25 @@ class MainController < ApplicationController
 
   end
 
-  def search_with_facet q,page,size,sort_field
+  def search_with_facet q, page, size, sort_field
     host = "http://210.34.4.113:9200"
     @client = Elasticsearch::Client.new host: host, log: true
 
     @client.search index: 'znss',
                    body: {
-                       query: { match: { title: q } },
-                       "sort" => {sort_field => {"order"=>"desc"}}, #排序
+                       "query" => {"query_string" => {"query" => q}},
+                       "sort" => {sort_field => {"order" => "desc"}}, #排序
                        size: size, #每次返回结果数量
                        from: (page-1)*size, #偏移量 用于分页
                        facets: {
-                           type_id: { terms: { field: 'type_id' } },
-                           cat_id: { terms: { field: 'cat_id' } }
+                           type_id: {terms: {field: 'type_id'}},
+                           cat_id: {terms: {field: 'cat_id'}}
                        }
                    }
   end
 
   def import_data
-    File.open "#{Rails.root}/public/data/json_librarian_2013_11_26.txt" do  |f|
+    File.open "#{Rails.root}/public/data/json_librarian_2013_11_26.txt" do |f|
       json_str=''
       f.each_line do |line|
         json_str=json_str+line
@@ -95,7 +84,7 @@ class MainController < ApplicationController
       host = "http://210.34.4.113:9200"
       @client = Elasticsearch::Client.new host: host, log: true
       json_obj.each do |item|
-        @client.index index:'znss', type: 'item', id: item['fields']['id'], body: item['fields']
+        @client.index index: 'znss', type: 'item', id: item['fields']['id'], body: item['fields']
       end
 
     end

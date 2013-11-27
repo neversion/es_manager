@@ -46,7 +46,7 @@ end
 
 gem 'elasticsearch'
 gem 'json'
-
+gem 'nokogiri'
 #调试
 group :development do
   gem 'better_errors'
