@@ -18,6 +18,8 @@ class MainController < ApplicationController
   private
 
   def mapping
+    host = "http://210.34.4.113:9200"
+    @client = Elasticsearch::Client.new host: host, log: true
     @client.indices.create index: 'znss',
                            body: {
                                settings: {
