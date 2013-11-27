@@ -1,5 +1,6 @@
 EsManager::Application.routes.draw do
   get "main/s"
+
   get "main/parse"
   get "main/import"
   # The priority is based upon order of creation: first created -> highest priority.

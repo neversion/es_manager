@@ -16,6 +16,18 @@ class MainController < ApplicationController
   end
 
   private
+  def index
+  @client.index index: 'znss',
+             type: 'item',
+             body: {
+              title: 'Test 1',
+              tags: ['y', 'z'],
+              published: true,
+              published_at: Time.now.utc.iso8601,
+              counter: 1
+            }
+
+  end
   def mapping
     @client.indices.create index: 'znss',
                            body: {
@@ -88,4 +100,5 @@ class MainController < ApplicationController
 
     end
   end
+
 end
