@@ -14,32 +14,57 @@ def import_test_data path
       end
       xml_doc = Nokogiri::XML(xml_str)
       binding.pry
-      @client.index index: 'oai', type: 'item', body: {
-          title : xml_doc.xpath('//dc:creator').text,
-          creator : xml_doc.xpath('//dc:creator').text,
-          subject : xml_doc.xpath('//dc:creator').text,
-          descripton : xml_doc.xpath('//dc:creator').text,
-          publisher : xml_doc.xpath('//dc:creator').text,
-          contributor : xml_doc.xpath('//dc:creator').text,
-          date : xml_doc.xpath('//dc:creator').text,
-          type : xml_doc.xpath('//dc:creator').text,
-          format : xml_doc.xpath('//dc:creator').text,
-          identifier : xml_doc.xpath('//dc:creator').text,
-          source : xml_doc.xpath('//dc:creator').text,
-          language : xml_doc.xpath('//dc:creator').text,
-          relation : xml_doc.xpath('//dc:creator').text,
-          coverage : xml_doc.xpath('//dc:creator').text,
-          rights : xml_doc.xpath('//dc:creator').text,
-          harvest_time : xml_doc.xpath('//dc:creator').text
-      }
+      parsed_date = ''
+      begin
+        parsed_date = Date.parse(xml_doc.xpath('//dc:date').text) unless xml_doc.xpath('//dc:date').text==''
+      rescue
+        puts xml_doc.xpath('//dc:date').text
+      end
+      if parsed_date.length!=0
+        body_json = {
+            "title" => xml_doc.xpath('//dc:title').text,
+            "creator" => xml_doc.xpath('//dc:creator').text,
+            "subject" => xml_doc.xpath('//dc:subject').text,
+            "descripton" => xml_doc.xpath('//dc:descripton').text,
+            "publisher" => xml_doc.xpath('//dc:publisher').text,
+            "contributor" => xml_doc.xpath('//dc:contributor').text,
+            "date" => xml_doc.xpath('//dc:date').text,
+            "type" => xml_doc.xpath('//dc:type').text,
+            "format" => xml_doc.xpath('//dc:format').text,
+            "identifier" => xml_doc.xpath('//dc:identifier').text,
+            "source" => xml_doc.xpath('//dc:source').text,
+            "language" => xml_doc.xpath('//dc:language').text,
+            "relation" => xml_doc.xpath('//dc:relation').text,
+            "coverage" => xml_doc.xpath('//dc:coverage').text,
+            "rights" => xml_doc.xpath('//dc:rights').text,
+            "harvest_time" => Date.new
+        }
+      else
+        body_json = {
+            "title" => xml_doc.xpath('//dc:title').text,
+            "creator" => xml_doc.xpath('//dc:creator').text,
+            "subject" => xml_doc.xpath('//dc:subject').text,
+            "descripton" => xml_doc.xpath('//dc:descripton').text,
+            "publisher" => xml_doc.xpath('//dc:publisher').text,
+            "contributor" => xml_doc.xpath('//dc:contributor').text,
+            "type" => xml_doc.xpath('//dc:type').text,
+            "format" => xml_doc.xpath('//dc:format').text,
+            "identifier" => xml_doc.xpath('//dc:identifier').text,
+            "source" => xml_doc.xpath('//dc:source').text,
+            "language" => xml_doc.xpath('//dc:language').text,
+            "relation" => xml_doc.xpath('//dc:relation').text,
+            "coverage" => xml_doc.xpath('//dc:coverage').text,
+            "rights" => xml_doc.xpath('//dc:rights').text,
+            "harvest_time" => Date.new
+        }
+      end
+      @client.index index: 'oai', type: 'item', body: body_json
 
 
     end
   end
 
 end
-
-
 
 
 def mapping
@@ -79,5 +104,6 @@ def mapping
 
 end
 
-#import_test_data "/hd/metadata/data/guji"
-mapping
+import_test_data "/hd/metadata/data/guji"
+#mapping
+
