@@ -36,7 +36,7 @@ def import_test_data path
             "relation" => get_field_value(xml_doc, '//dc:relation'),
             "coverage" => get_field_value(xml_doc, '//dc:coverage'),
             "rights" => get_field_value(xml_doc, '//dc:rights'),
-            "harvest_time" => Date.new
+            "harvest_time" => Time.now
         }
       else
         body_json = {
@@ -55,7 +55,7 @@ def import_test_data path
             "relation" => get_field_value(xml_doc, '//dc:relation'),
             "coverage" => get_field_value(xml_doc, '//dc:coverage'),
             "rights" => get_field_value(xml_doc, '//dc:rights'),
-            "harvest_time" => Date.new
+            "harvest_time" => Time.now
         }
       end
       @client.index index: 'oai', type: 'item', body: body_json
@@ -97,6 +97,7 @@ def mapping_with_new_index
                                          publisher: {type: 'string', store: 'yes'},
                                          contributor: {type: 'string', analyzer: 'snowball', store: 'yes'},
                                          date: {type: 'date', store: 'yes'},
+                                         origin_date: {type: 'string',index: 'no', store: 'yes'},
                                          type: {type: 'string', analyzer: 'snowball', store: 'yes'},
                                          format: {type: 'string', index: 'not_analyzed', store: 'yes'},
                                          identifier: {type: 'string', index: 'not_analyzed', store: 'yes'},
@@ -142,3 +143,4 @@ def update_mapping index_name
 end
 
 import_test_data "/hd/metadata/data/guji"
+#mapping_with_new_index
