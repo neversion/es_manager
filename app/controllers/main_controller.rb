@@ -7,8 +7,26 @@ class MainController < ApplicationController
   def s
     @result={}
     if params[:q]
-      @result = search_with_facet(params[:q], 1, 5, 'create_timestamp')
+      page_index = params[:p] || 1
+      if !params.nil? && params[:s]=='1'
+        @result = search_with_facet(params[:q], page_index.to_i, 10, 'create_timestamp')
+      else
+        @result = search_with_facet(params[:q], page_index.to_i, 10, nil)
+      end
+
+      @count=@result['hits']['total']
+      if @count%10=
+      @list=[]
+      @facets =@result['facets']['type_id']['terms']
+      @result['hits']['hits'].each do |item|
+        @list << item['_source']
+      end
+      @page_count=0
+      @page_size=10
+    else
+      #最新公告
     end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @result }
@@ -62,18 +80,31 @@ class MainController < ApplicationController
   def search_with_facet q, page, size, sort_field
     host = "http://210.34.4.113:9200"
     @client = Elasticsearch::Client.new host: host, log: true
+    if sort_field.nil?
+      @client.search index: 'znss',
+                     body: {
+                         "query" => {"query_string" => {"query" => q}},
+                         size: size, #每次返回结果数量
+                         from: (page-1)*size, #偏移量 用于分页
+                         facets: {
+                             type_id: {terms: {field: 'type_id'}},
+                             cat_id: {terms: {field: 'cat_id'}}
+                         }
+                     }
+    else
+      @client.search index: 'znss',
+                     body: {
+                         "query" => {"query_string" => {"query" => q}},
+                         "sort" => {sort_field => {"order" => "desc"}}, #排序
+                         size: size, #每次返回结果数量
+                         from: (page-1)*size, #偏移量 用于分页
+                         facets: {
+                             type_id: {terms: {field: 'type_id'}},
+                             cat_id: {terms: {field: 'cat_id'}}
+                         }
+                     }
+    end
 
-    @client.search index: 'znss',
-                   body: {
-                       "query" => {"query_string" => {"query" => q}},
-                       "sort" => {sort_field => {"order" => "desc"}}, #排序
-                       size: size, #每次返回结果数量
-                       from: (page-1)*size, #偏移量 用于分页
-                       facets: {
-                           type_id: {terms: {field: 'type_id'}},
-                           cat_id: {terms: {field: 'cat_id'}}
-                       }
-                   }
   end
 
   def import_data
