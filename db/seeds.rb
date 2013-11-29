@@ -58,7 +58,12 @@ def import_test_data path
             "harvest_time" => Time.now
         }
       end
-      @client.index index: 'oai', type: 'item', body: body_json
+      begin
+        @client.index index: 'oai_ik', type: 'item', body: body_json
+      rescue
+        binding.pry
+        puts body_json
+      end
     end
   end
 
@@ -68,9 +73,9 @@ def get_field_value xml_doc, xpath
   result=''
   xml_doc.xpath(xpath).each_with_index do |item,index|
     if index==0
-      result=item.text
+      result=item.text.strip
     else
-      result = "#{result}|||#{item.text}"
+      result = "#{result}|||#{item.text.strip}"
     end
   end
   return result
@@ -79,7 +84,7 @@ end
 def mapping_with_new_index
   host = "http://210.34.4.113:9200"
   @client = Elasticsearch::Client.new host: host, log: true
-  @client.indices.create index: 'oai',
+  @client.indices.create index: 'oai_ik',
                          body: {
                              settings: {
                                  index: {
@@ -90,15 +95,15 @@ def mapping_with_new_index
                              mappings: {
                                  item: {
                                      properties: {
-                                         title: {type: 'string', analyzer: 'snowball', store: 'yes', boost: 3.0},
-                                         creator: {type: 'string', analyzer: 'snowball', store: 'yes'},
-                                         subject: {type: 'string', analyzer: 'snowball', store: 'yes'},
-                                         description: {type: 'string', analyzer: 'snowball', store: 'yes'},
+                                         title: {type: 'string', analyzer: 'ik', store: 'yes', boost: 3.0},
+                                         creator: {type: 'string', analyzer: 'ik', store: 'yes'},
+                                         subject: {type: 'string', analyzer: 'ik', store: 'yes'},
+                                         description: {type: 'string', analyzer: 'ik', store: 'yes'},
                                          publisher: {type: 'string', store: 'yes'},
-                                         contributor: {type: 'string', analyzer: 'snowball', store: 'yes'},
+                                         contributor: {type: 'string', analyzer: 'ik', store: 'yes'},
                                          date: {type: 'date', store: 'yes'},
                                          origin_date: {type: 'string',index: 'no', store: 'yes'},
-                                         type: {type: 'string', analyzer: 'snowball', store: 'yes'},
+                                         type: {type: 'string', analyzer: 'ik', store: 'yes'},
                                          format: {type: 'string', index: 'not_analyzed', store: 'yes'},
                                          identifier: {type: 'string', index: 'not_analyzed', store: 'yes'},
                                          source: {type: 'string', index: 'not_analyzed', store: 'yes'},
@@ -117,18 +122,19 @@ end
 def update_mapping index_name
   host = "http://210.34.4.113:9200"
   client = Elasticsearch::Client.new host: host, log: true
+  binding.pry
   client.indices.put_mapping index: index_name, type: 'item', body: {
       item: {
           properties: {
-              title: {type: 'string', analyzer: 'snowball', store: 'yes', boost: 3.0},
-              creator: {type: 'string', analyzer: 'snowball', store: 'yes'},
-              subject: {type: 'string', analyzer: 'snowball', store: 'yes'},
-              description: {type: 'string', analyzer: 'snowball', store: 'yes'},
+              title: {type: 'string', analyzer: 'ik', store: 'yes', boost: 3.0},
+              creator: {type: 'string', analyzer: 'ik', store: 'yes'},
+              subject: {type: 'string', analyzer: 'ik', store: 'yes'},
+              description: {type: 'string', analyzer: 'ik', store: 'yes'},
               publisher: {type: 'string', store: 'yes'},
-              contributor: {type: 'string', analyzer: 'snowball', store: 'yes'},
+              contributor: {type: 'string', analyzer: 'ik', store: 'yes'},
               date: {type: 'date', store: 'yes'},
               origin_date: {type: 'string',index: 'no', store: 'yes'},
-              type: {type: 'string', analyzer: 'snowball', store: 'yes'},
+              type: {type: 'string', analyzer: 'ik', store: 'yes'},
               format: {type: 'string', index: 'not_analyzed', store: 'yes'},
               identifier: {type: 'string', index: 'not_analyzed', store: 'yes'},
               source: {type: 'string', index: 'not_analyzed', store: 'yes'},
@@ -142,5 +148,8 @@ def update_mapping index_name
   }
 end
 
+mapping_with_new_index
 import_test_data "/hd/metadata/data/guji"
-#mapping_with_new_index
+
+#update_mapping "oai_ik"
+
