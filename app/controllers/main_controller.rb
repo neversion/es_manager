@@ -13,16 +13,19 @@ class MainController < ApplicationController
       else
         @result = search_with_facet(params[:q], page_index.to_i, 10, nil)
       end
+      @page_size=10
 
       @count=@result['hits']['total']
-      if @count%10=
+      if @count%@page_size==0
+        @page_count=@count/@page_size
+      else
+        @page_count = @count/@page_size +1
+      end
       @list=[]
       @facets =@result['facets']['type_id']['terms']
       @result['hits']['hits'].each do |item|
         @list << item['_source']
       end
-      @page_count=0
-      @page_size=10
     else
       #最新公告
     end
@@ -83,7 +86,7 @@ class MainController < ApplicationController
     if sort_field.nil?
       @client.search index: 'znss',
                      body: {
-                         "query" => {"query_string" => {"query" => q}},
+                         "query" => {"query_string" => {"query" => "'#{q}"}},
                          size: size, #每次返回结果数量
                          from: (page-1)*size, #偏移量 用于分页
                          facets: {
@@ -94,7 +97,7 @@ class MainController < ApplicationController
     else
       @client.search index: 'znss',
                      body: {
-                         "query" => {"query_string" => {"query" => q}},
+                         "query" => {"query_string" => {"query" => "'#{q}"}},
                          "sort" => {sort_field => {"order" => "desc"}}, #排序
                          size: size, #每次返回结果数量
                          from: (page-1)*size, #偏移量 用于分页

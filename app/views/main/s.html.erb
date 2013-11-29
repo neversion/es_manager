@@ -123,7 +123,7 @@
             <% @list.each do |item| %>
             <li class="record">
               <div class="title"><a target="_blank" href='<%= item['url'] %>'><%= item['title'] %></a>
-                <span id="resultRp_ctl01_TimeLb" class="time"><%= item['create_timestamp'] %></span></div>
+                <span id="resultRp_ctl01_TimeLb" class="time"><%= parse_timestamp(item['create_timestamp']) %></span></div>
               <div>
                 <span class="body"><%= item['body'] %></span>
               </div>
@@ -132,8 +132,10 @@
           </ul>
             <ul class="paging" runat="server" id="PagingUl">
               <li>
+                <a href='<%= gen_pre_url %>'>上一页</a>
               </li>
               <li>
+                <a href='<%= gen_next_url %>'>下一页</a>
               </li>
               <li class="clear"></li>
             </ul>
