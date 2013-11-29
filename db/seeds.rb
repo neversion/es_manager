@@ -148,8 +148,8 @@ def update_mapping index_name
   }
 end
 
-mapping_with_new_index
-import_test_data "/hd/metadata/data/guji"
+#mapping_with_new_index
+#import_test_data "/hd/metadata/data/guji"
 
 #update_mapping "oai_ik"
 

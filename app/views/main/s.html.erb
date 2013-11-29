@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>厦门大学图书馆 - 站内搜索</title>
+  <link rel="stylesheet" type="text/css" href="css/style1.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/secondpage.css" media="screen" />
+  <link rel="icon" href="images/favicon.ico"  type="image/x-icon" />
+</head>
+<body>
 <h1>Main#s</h1>
 <p>Find me in app/views/main/s.html.erb</p>
 <%= form_tag main_s_path, method:'get' do %>
@@ -5,3 +15,153 @@
     <%= submit_tag "search" %>
 <% end %>
 <%= @result %>
+
+<div class="container_12" id="wrap">
+  <!-- top -->
+  <div class="grid_12 pull_1_secondpage">
+
+    <ul class="header_second">
+      <li><a href="http://library.xmu.edu.cn"><img src="page image/xmulib logo.png"></a></li>
+      <li class="searchInsite" style="display:none;"><input class="search_text" name="txtSearch" id="txtSearch" type="text" value="" onKeypress="return submitForm()">&nbsp;<input type="submit" name="submit" id="submit" value="站内搜索" class="search_button"/></li>
+    </ul>
+
+  </div>
+  <!--end top -->
+  <div class="clear"></div>
+  <!-- navigator -->
+  <div class="grid_12_secondPage">
+    <ul class="nav_second">
+      <li>&nbsp;</li>
+      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li><a href="http://library.xmu.edu.cn">首&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
+      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li >
+        <a href="http://library.xmu.edu.cn/portal/secondpage.asp?pid=589&sid=65">概&nbsp;&nbsp;&nbsp;&nbsp;况</a>
+      </li>
+      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li>
+        <a href="http://library.xmu.edu.cn/portal/libraryinfo.asp">服&nbsp;&nbsp;&nbsp;&nbsp;务</a>
+      </li>
+      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li>
+        <a href="http://library.xmu.edu.cn/portal/secondpage.asp?pid=3&sid=39">资&nbsp;&nbsp;&nbsp;&nbsp;源</a>
+      </li>
+      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li >
+        <a href="http://library.xmu.edu.cn/portal/secondpage.asp?pid=8&sid=9">共享平台</a>
+      </li>
+      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li>
+        <a href="http://library.xmu.edu.cn/portal/secondpage.asp?pid=5&sid=57">文&nbsp;&nbsp;&nbsp;&nbsp;档</a>
+      </li>
+      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li ><a href="http://library.xmu.edu.cn/portal/visit_site.asp?title=jade&url=http://library.xmu.edu.cn/yutang/" target="_blank">玉&nbsp;&nbsp;&nbsp;&nbsp;堂</a></li>
+      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li ><a href="http://library.xmu.edu.cn/portal/visit_site.asp?title=mylibrary&url=http://210.34.4.28/reader/login.php" target="_blank">我的图书馆</a></li>
+      <li class="line"><img src="images/menu line 2-28.png"></li>
+    </ul>
+
+  </div>
+  <!-- end navigator -->
+
+  <div class="clear-shadow"></div>
+
+  <!-- left column -->
+  <div class="grid_3">
+    <div class="left">
+      <div class="tab_leftmenu">
+
+        <div id="content_2">
+          <asp:Repeater ID="catRp" runat="server" onitemdatabound="catRp_ItemDataBound">
+            <HeaderTemplate><ul class="tabbox">
+              <li class="menu1">搜索 - 分类结果</li>
+            </HeaderTemplate>
+            <ItemTemplate>
+              <li>
+                <asp:HyperLink ID="catHl" runat="server" ></asp:HyperLink>
+                <asp:HiddenField ID="catHf" runat="server" Value="<%# Container.DataItem %>"/>
+              </li>
+            </ItemTemplate>
+            <FooterTemplate></ul></FooterTemplate>
+          </asp:Repeater>
+          <ul class="tabbox" runat="server" id="OrderUl">
+            <li class="menu1">搜索 - 排序</li>
+            <li><asp:Button ID="RelBt" runat="server" Text="按相关性" onclick="RelBt_Click" /></li>
+            <li><asp:Button ID="TimeBt" runat="server" Text="按时间" onclick="TimeBt_Click" /></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--end left column -->
+  <!-- right column -->
+  <div class="grid_9">
+    <div class="tab_rightContent_secondpage">
+      <ul class="tab_Content">
+        <li class="contentTitle">&nbsp;</li>
+        <li id="siteMap" class="contentTitle"><a href="http://library.xmu.edu.cn/">首页</a>&nbsp;>&nbsp;<a href="#">站内搜索</a></li>
+        <div class="tab_option" id="tab_option">
+          <asp:TextBox ID="alySearch" runat="server" ></asp:TextBox>
+          <asp:Button ID="alySmt" runat="server" Text="搜索" OnClick="alySmt_Click"  />
+          <span id="CostSpan" runat="server" class="rstNum">找到相关页面约为<asp:Label ID="totalLb" runat="server" Text="0"></asp:Label>条 耗时：<asp:Label ID="timeLb" runat="server" Text="0"></asp:Label>s</span>
+          <!-最新公告->
+          <asp:Repeater ID="NoticeRp" runat="server" >
+            <HeaderTemplate><div class="noticeHeader">最新公告</div><ul class="results"></HeaderTemplate>
+            <ItemTemplate>
+              <li class="record">
+                <div class="title"><a target="_blank" href="<%# DataBinder.Eval(Container.DataItem,"link") %>"><%# DataBinder.Eval(Container.DataItem,"title") %></a>
+                  <asp:Label ID="TimeLb" CssClass="time" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"time") %>'></asp:Label></div>
+                <div>
+                  <span class="body"><%# DataBinder.Eval(Container.DataItem,"content") %></span>
+                </div>
+              </li>
+            </ItemTemplate>
+            <FooterTemplate></ul></FooterTemplate>
+      </asp:Repeater>
+      <!-End 最新公告->
+      <asp:Repeater ID="resultRp" runat="server"
+                    onitemdatabound="resultRp_ItemDataBound" >
+        <HeaderTemplate><ul class="results"></HeaderTemplate>
+        <ItemTemplate>
+          <li class="record">
+            <div class="title"><a target="_blank" href="<%# DataBinder.Eval(Container.DataItem,"url") %>"><%# DataBinder.Eval(Container.DataItem,"title") %></a>
+              <asp:Label ID="TimeLb" CssClass="time" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"create_timestamp") %>'></asp:Label></div>
+            <div>
+              <asp:HiddenField ID="HiddenField1" runat="server" Value='<%# DataBinder.Eval(Container.DataItem,"cat_id") %>' />
+              <span class="body"><%# DataBinder.Eval(Container.DataItem,"body") %></span>
+
+            </div>
+          </li>
+        </ItemTemplate>
+        <FooterTemplate></ul></FooterTemplate>
+      </asp:Repeater>
+      <ul class="paging" runat="server" id="PagingUl">
+        <li><asp:HyperLink ID="preHl" runat="server" CssClass="arrow">&laquo;上一页</asp:HyperLink></li>
+        <%=pageIndex%>
+        <li><asp:HyperLink ID="nextHl" runat="server" CssClass="arrow">下一页&raquo;</asp:HyperLink></li>
+        <li class="clear"></li>
+      </ul>
+
+    </div>
+    </ul>
+
+  </div>
+</div>
+<!--end right column -->
+
+<div class="clear"></div>
+
+<div class="grid_12" id="site_info">
+  <div class="box" align="center">
+    <p><a href="http://www.xmu.edu.cn" target="_blank">厦门大学</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.calis.edu.cn/" target="_blank">CALIS</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cadal.cn/" target="_blank">CADAL</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cashl.edu.cn/portal/index.jsp" target="_blank">CASHL</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://library.xmu.edu.cn/portal/link.asp" target="_blank">相关链接</a><br/>
+      版权所有&nbsp;&nbsp;<a href="http://library.xmu.edu.cn">厦门大学图书馆</a>&nbsp;&nbsp;2012-2013&nbsp;&nbsp;&nbsp;&nbsp;
+      维护制作&nbsp;&nbsp;厦门大学图书馆&nbsp;&nbsp;<a href="http://info.wp.xmulib.org/48/" target="_blank">信息技术部</a>
+      &nbsp;&nbsp;&nbsp;&nbsp;Power by：<a href="http://www.aliyun.com" target="_blank">阿里云</a>
+      &nbsp;&nbsp;&nbsp;&nbsp;厦门大学ICP：<a href="http://register.xmu.edu.cn/Record.aspx?RecordID=D200152" target="_blank">D200152</a>
+    </p>
+  </div>
+</div>
+<div class="clear"></div>
+</div>
+</body>
+</html>
