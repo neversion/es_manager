@@ -2845,7 +2845,8 @@ ul.notice li a{
 {
   display:block;
   margin:0 auto;
-  width:400px;
+  border-top: 1px solid rgb(241, 235, 235);
+  padding-top:3px;
 }
 .paging li
 {
@@ -2887,6 +2888,7 @@ ul.notice li a{
 ul.results
 {
   margin-bottom:0px;
+  min-height: 485px;
 }
 ul.results li
 {

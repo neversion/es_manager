@@ -72,20 +72,18 @@
         <div id="content_2">
           <ul class="tabbox">
             <li class="menu1">搜索 - 分类结果</li>
+            <li><a href="<%= gen_all_url %>">全部</a></li>
             <% @facets.each do |item| %>
-                <li>1 <%= item['term'] %> : <%= item['count'] %> </li>
+                <li><a href="<%= gen_facet_url(item['term']) %>"><%= code_2_name(item['term']) %> : <%= item['count'] %></a> </li>
             <% end %>
-            <li>
-              分面
-            </li>
           </ul>
           <ul class="tabbox" runat="server" id="OrderUl">
             <li class="menu1">搜索 - 排序</li>
             <li>
-              相关度
+              <a href="<%= gen_rel_sort_url %>">相关度</a>
             </li>
             <li>
-              发布时间
+              <a href="<%= gen_time_sort_url %>">发布时间</a>
             </li>
           </ul>
         </div>
@@ -107,6 +105,7 @@
           <% end %>
           <span id="CostSpan" class="rstNum">找到相关页面约为 <%= @count %>  条 耗时：s</span>
           <!-最新公告->
+          <% if params[:q].nil? || params[:q]==""  %>
           <div class="noticeHeader">最新公告</div>
           <ul class="results">
             <li class="record">
@@ -116,6 +115,7 @@
               </div>
             </li>
           </ul>
+          <% end %>
           <!-End 最新公告->
           <ul class="results">
             <% @list.each do |item| %>
@@ -153,7 +153,7 @@
         <a href="http://www.xmu.edu.cn" target="_blank">厦门大学</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.calis.edu.cn/" target="_blank">CALIS</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cadal.cn/" target="_blank">CADAL</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cashl.edu.cn/portal/index.jsp" target="_blank">CASHL</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://library.xmu.edu.cn/portal/link.asp" target="_blank">相关链接</a><br/>
         版权所有&nbsp;&nbsp;<a href="http://library.xmu.edu.cn">厦门大学图书馆</a>&nbsp;&nbsp;2012-2013&nbsp;&nbsp;&nbsp;&nbsp;
         维护制作&nbsp;&nbsp;厦门大学图书馆&nbsp;&nbsp;<a href="http://info.wp.xmulib.org/48/" target="_blank">信息技术部</a>
-        &nbsp;&nbsp;&nbsp;&nbsp;Power by：<a href="http://www.aliyun.com" target="_blank">阿里云</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;厦门大学ICP：<a href="http://register.xmu.edu.cn/Record.aspx?RecordID=D200152" target="_blank">D200152</a>
       </p>
     </div>

@@ -35,4 +35,39 @@ module MainHelper
 
   end
 
+  def code_2_name code
+    case code.to_i
+      when 5
+        return "文档"
+      when 4
+        return "服务"
+      when 3
+        return "资源"
+      when 8
+        return "共享平台"
+      when 589
+        return "概况"
+      when 32
+        return "公告"
+      when -1
+        return "全部"
+    end
+  end
+
+  def gen_facet_url cat_id
+    request.url + "&f=#{cat_id}"
+  end
+
+  def gen_all_url
+    return request.url.gsub(/&f=[0-9]+/,'')
+  end
+
+  def gen_rel_sort_url
+    return request.url.gsub(/&s=[0-9]+/,'')
+  end
+
+  def gen_time_sort_url
+    request.url + "&s=1"
+  end
+
 end
