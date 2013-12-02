@@ -103,7 +103,7 @@
               <%= text_field_tag :q, nil, class: "alySearch" %>
               <%= submit_tag "搜索", class: 'alySmt' %>
           <% end %>
-          <span id="CostSpan" class="rstNum">找到相关页面约为 <%= @count %>  条 耗时：s</span>
+          <span id="CostSpan" class="rstNum">找到相关页面约为 <%= @count %>  条</span>
           <!-最新公告->
           <% if params[:q].nil? || params[:q]==""  %>
           <div class="noticeHeader">最新公告</div>

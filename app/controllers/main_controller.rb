@@ -24,6 +24,8 @@ class MainController < ApplicationController
       @list=[]
       @facets =@result['facets']['type_id']['terms']
       @result['hits']['hits'].each do |item|
+        #item['_source']['title']=item['highlight']['title'][0] unless item['highlight']['title'].nil?
+        #item['_source']['body']=item['highlight']['body'][0] unless item['highlight']['body'].nil?
         @list << item['_source']
       end
     else
@@ -90,28 +92,38 @@ class MainController < ApplicationController
         facets: {
             type_id: {terms: {field: 'type_id'}},
             cat_id: {terms: {field: 'cat_id'}}
+        },
+        "highlight" => {
+            "fields" => {
+                "title" =>{ },
+                "body" => {}
+            }
         }
+
     }
     if !sort_field.nil?
       body_json[:sort]= {sort_field => {"order" => "desc"}}
     end
     if !filter_id.nil?
-      body_json = {
-          #"filtered" => {
-              :query => {"query_string" => {"query" => "'#{q}"}},
-              size: size, #每次返回结果数量
-              from: (page-1)*size, #偏移量 用于分页
-              facets: {
-                  type_id: {terms: {field: 'type_id'}},
-                  cat_id: {terms: {field: 'cat_id'}}
-              },
-              :filter => {
-                          "term"=>{"cat_id"=>filter_id}
-                      }
-
-
-          }
-      #}
+      body_json[:filter]= {
+          "term"=>{"cat_id"=>filter_id}
+      }
+      #body_json = {
+      #    #"filtered" => {
+      #        :query => {"query_string" => {"query" => "'#{q}"}},
+      #        size: size, #每次返回结果数量
+      #        from: (page-1)*size, #偏移量 用于分页
+      #        facets: {
+      #            type_id: {terms: {field: 'type_id'}},
+      #            cat_id: {terms: {field: 'cat_id'}}
+      #        },
+      #        :filter => {
+      #                    "term"=>{"cat_id"=>filter_id}
+      #                }
+      #
+      #
+      #    }
+      ##}
     end
 
     @client.search index: 'znss', body: body_json
