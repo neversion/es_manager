@@ -3,8 +3,6 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <title>厦门大学图书馆 - 站内搜索</title>
-  <link rel="stylesheet" type="text/css" href="css/style1.css" media="screen"/>
-  <link rel="stylesheet" type="text/css" href="css/secondpage.css" media="screen"/>
   <link rel="icon" href="images/favicon.ico" type="image/x-icon"/>
 </head>
 <body>
@@ -15,7 +13,7 @@
   <div class="grid_12 pull_1_secondpage">
 
     <ul class="header_second">
-      <li><a href="http://library.xmu.edu.cn"><img src="page image/xmulib logo.png"></a></li>
+      <li><a href="http://library.xmu.edu.cn"><%= image_tag("znss/xmulib logo.png") %></a></li>
       <li class="searchInsite" style="display:none;">
         <input class="search_text" name="txtSearch" id="txtSearch" type="text" value="" onKeypress="return submitForm()">&nbsp;<input type="submit" name="submit" id="submit" value="站内搜索" class="search_button"/>
       </li>
@@ -28,37 +26,37 @@
   <div class="grid_12_secondPage">
     <ul class="nav_second">
       <li>&nbsp;</li>
-      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li class="line"><%= image_tag("znss/menu line 2-28.png") %></li>
       <li><a href="http://library.xmu.edu.cn">首&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
-      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li class="line"><%= image_tag("znss/menu line 2-28.png") %></li>
       <li>
         <a href="http://library.xmu.edu.cn/portal/secondpage.asp?pid=589&sid=65">概&nbsp;&nbsp;&nbsp;&nbsp;况</a>
       </li>
-      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li class="line"><%= image_tag("znss/menu line 2-28.png") %></li>
       <li>
         <a href="http://library.xmu.edu.cn/portal/libraryinfo.asp">服&nbsp;&nbsp;&nbsp;&nbsp;务</a>
       </li>
-      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li class="line"><%= image_tag("znss/menu line 2-28.png") %></li>
       <li>
         <a href="http://library.xmu.edu.cn/portal/secondpage.asp?pid=3&sid=39">资&nbsp;&nbsp;&nbsp;&nbsp;源</a>
       </li>
-      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li class="line"><%= image_tag("znss/menu line 2-28.png") %></li>
       <li>
         <a href="http://library.xmu.edu.cn/portal/secondpage.asp?pid=8&sid=9">共享平台</a>
       </li>
-      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li class="line"><%= image_tag("znss/menu line 2-28.png") %></li>
       <li>
         <a href="http://library.xmu.edu.cn/portal/secondpage.asp?pid=5&sid=57">文&nbsp;&nbsp;&nbsp;&nbsp;档</a>
       </li>
-      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li class="line"><%= image_tag("znss/menu line 2-28.png") %></li>
       <li>
         <a href="http://library.xmu.edu.cn/portal/visit_site.asp?title=jade&url=http://library.xmu.edu.cn/yutang/" target="_blank">玉&nbsp;&nbsp;&nbsp;&nbsp;堂</a>
       </li>
-      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li class="line"><%= image_tag("znss/menu line 2-28.png") %></li>
       <li>
         <a href="http://library.xmu.edu.cn/portal/visit_site.asp?title=mylibrary&url=http://210.34.4.28/reader/login.php" target="_blank">我的图书馆</a>
       </li>
-      <li class="line"><img src="images/menu line 2-28.png"></li>
+      <li class="line"><%= image_tag("znss/menu line 2-28.png") %></li>
     </ul>
 
   </div>
@@ -125,7 +123,7 @@
               <div class="title"><a target="_blank" href='<%= item['url'] %>'><%= item['title'] %></a>
                 <span id="resultRp_ctl01_TimeLb" class="time"><%= parse_timestamp(item['create_timestamp']) %></span></div>
               <div>
-                <span class="body"><%= item['body'] %></span>
+                <span class="body"><%= truncate(item['body'], length: 100) %></span>
               </div>
             </li>
             <% end %>

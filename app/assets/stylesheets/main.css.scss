@@ -17,7 +17,7 @@ body {
   font:13px/1.5 Helvetica ;
   font-family: Arial, 'Liberation Sans', FreeSans,STHeiti Light,Microsoft YaHei;
   color:#333;
-  background:url(../images/bg.png) repeat;
+  background:image-url("znss/bg.png") repeat;
   font-size:12px;
   padding:0;
 }
@@ -598,7 +598,7 @@ h2#page-heading {
 
 .box h2 a,.box h2 a.visible {
   color:#fff;
-  background:#333 url(../img/switch_minus.gif) 97% 50% no-repeat;
+  background:#333 image_url("znss/switch_minus.gif") 97% 50% no-repeat;
   display:block;
   border:none;
   margin:-6px -12px;
@@ -618,7 +618,7 @@ h2#page-heading {
 }
 
 .box h2 a.hidden,.box h2 a.hidden:hover {
-  background-image:url(../img/switch_plus.gif);
+  background:image_url("znss/switch_plus.gif");
 }
 
 .box h2 a:hover {
@@ -828,7 +828,7 @@ input.search.text {
 
 input.search.button {
   margin-left:2%;
-  background:url(../images/find.gif) 0 2px no-repeat;
+  background:image_url("find.gif") 0 2px no-repeat;
   border:0;
   width:60px;
   height:25px;
@@ -1010,7 +1010,7 @@ ul.header {
   height:72px;
   width:989px;
   text-align:left;
-  background-image:url(../images/header960.png);
+  background:image_url("znss/header960-0.png");
 }
 
 ul.header li {
@@ -1064,7 +1064,7 @@ ul.nav,ul.nav * {
 ul.nav {
   position:relative;
   max-width:100%;
-  background-image:url("../images/menu bc 940-39.png");
+  background:image_url("znss/menu bc 940-39.png");
   height:39px;
   margin:0;
 }
@@ -1174,7 +1174,7 @@ ul.main li a {
 
 ul.main li:hover a {
   float:left;
-  background:url('../images/menu blue bottom 119-31.png') no-repeat;
+  background:image_url('znss/menu blue bottom 119-31.png') no-repeat;
   color:#fff;
   background-position:center 0;
 }
@@ -1228,12 +1228,12 @@ ul.main li:hover ul.myMenu li a:hover {
 
 ul.nav li.mylibrary a {
   color:#fff;
-  background:url('../images/menu red bottom 119-31.png') no-repeat;
+  background:image_url('znss/menu red bottom 119-31.png') no-repeat;
 }
 
 ul.nav li.mylibrary a:hover {
   color:#000;
-  background:url('../images/menu red bottom 119-31.png') no-repeat;
+  background:image_url('znss/menu red bottom 119-31.png') no-repeat;
 }
 
 ul.nav li.secondary {
@@ -1285,7 +1285,7 @@ ul.nav li.secondary:hover a:hover {
   display:block;
   margin-left:10px;
   height:15px;
-  background:url(../images/info_whitebar_bg.png) 0 20px no-repeat;
+  background:image_url("znss/info_whitebar_bg.png") 0 20px no-repeat;
 }
 
 .notice_li {
@@ -1312,7 +1312,7 @@ ul.nav li.secondary:hover a:hover {
   display:block;
   float:left;
   cursor:pointer;
-  background:url(../images/info_ren_bar_bg.png) no-repeat;
+  background:image_url("znss/info_ren_bar_bg.png") no-repeat;
 }
 
 #csstabs {
@@ -1320,7 +1320,7 @@ ul.nav li.secondary:hover a:hover {
   margin-left:0;
   width:450px;
   height:150px;
-  background:url(../images/info_whitebar_bg.png) 8px 19px no-repeat;
+  background:image_url("znss/info_whitebar_bg.png") 8px 19px no-repeat;
 }
 
 .tabcontent {
@@ -1354,11 +1354,11 @@ ul.tabcontent li{
 }
 
 #wrap {
-  background:url("../images/bg-w 960-860.png");
+  background:image_url("znss/bg-w 960-860.png");
 }
 
 #nav {
-  background-image:url("../images/menu bc 940-39.png");
+  background-image:image_url("znss/menu bc 940-39.png");
 }
 
 ul.res {
@@ -1394,30 +1394,30 @@ ul.res li a {
 }
 
 ul.res li.ebook {
-  background-image:url(../images/ebook.png);
+  background-image:image_url("znss/ebook.png");
   background-repeat:no-repeat;
   color:transparent;
 }
 
 ul.res li.edb {
-  background-image:url(../images/database.png);
+  background-image:image_url("znss/database.png");
   background-repeat:no-repeat;
   color:transparent;
 }
 
 ul.res li.media {
-  background-image:url(../images/mlitimedia.png);
+  background-image:image_url("znss/mlitimedia.png");
   background-repeat:no-repeat;
   color:transparent;
 }
 
 ul.res li.ejounal {
-  background-image:url(../images/eperiodical.png);
+  background-image:image_url("znss/eperiodical.png");
   background-repeat:no-repeat;
   color:transparent;
 }
 
-caption1 {
+.caption1 {
   text-align:left;
   font-weight:400;
 }
@@ -1510,7 +1510,7 @@ caption1 {
   width:20px;
   height:0;
   padding-top:12px;
-  background-image:url(../img/pagination.png);
+  background-image:image_url("znss/pagination.png");
   background-position:0 0;
   float:left;
   overflow:hidden;
@@ -1573,7 +1573,7 @@ ul.navbar li {
   display:block;
   font-size:12px;
   font-weight:700;
-  background:url('../images/search-white bottom.png') no-repeat;
+  background:image_url('znss/search-white bottom.png') no-repeat;
   margin:0;
   padding:3px;
 }
@@ -1585,7 +1585,7 @@ ul.navbar li a {
   float:left;
   height:2.6em;
   line-height:2.5em;
-  background:url('../images/search-white bottom.png') no-repeat;
+  background:image_url('znss/search-white bottom.png') no-repeat;
   width:12em;
   margin:0 auto;
   padding:0 1em;
@@ -1593,7 +1593,7 @@ ul.navbar li a {
 
 ul.navbar li:hover a {
   color:#fff;
-  background:url('../images/search-blue bottom.png') no-repeat;
+  background:image_url('znss/search-blue bottom.png') no-repeat;
   width:12em;
 }
 
@@ -1615,35 +1615,35 @@ ul.navbar li:hover a {
 }
 
 .book {
-  background:url(../images/search_book_white.png) no-repeat;
+  background:image_url("znss/search_book_white.png") no-repeat;
 }
 
 .edu {
-  background:url(../images/search_edu_white.png) no-repeat;
+  background:image_url("znss/search_edu_white.png") no-repeat;
 }
 
 .duxiu {
-  background:url(../images/search_duxiu_white.png) no-repeat;
+  background:image_url("znss/search_duxiu_white.png") no-repeat;
 }
 
 .xsearch {
-  background:url(../images/search_xsearch_white.png) no-repeat;
+  background:image_url("znss/search_xsearch_white.png") no-repeat;
 }
 
 .book_a {
-  background:url(../images/search_book_blue.png) no-repeat;
+  background:image_url("znss/search_book_blue.png") no-repeat;
 }
 
 .edu_a {
-  background:url(../images/search_edu_blue.png) no-repeat;
+  background:image_url("znss/search_edu_blue.png") no-repeat;
 }
 
 .duxiu_a {
-  background:url(../images/search_duxiu_blue.png) no-repeat;
+  background:image_url("znss/search_duxiu_blue.png") no-repeat;
 }
 
 .xsearch_a {
-  background:url(../images/search_xsearch_blue.png) no-repeat;
+  background:image_url("znss/search_xsearch_blue.png") no-repeat;
 }
 
 .searchtitle {
@@ -1662,13 +1662,13 @@ ul.searchtitle li {
   list-style-type:none;
   font-weight:400;
   width:100px;
-  background:url('../images/search_white_bottom.png') no-repeat;
+  background:image_ur("znss/search_white_bottom.png") no-repeat;
 }
 
 ul.searchtitle li.hover a {
   width:100px;
   color:#fff;
-  background:url('../images/search_blue_bt.png') no-repeat;
+  background:image_ur('znss/search_blue_bt.png') no-repeat;
 }
 .book,.book_a,.edu,.duxiu{
   display: block;
@@ -1676,13 +1676,13 @@ ul.searchtitle li.hover a {
 
 }
 .book{
-  background:url(../images/search_book_white.png) no-repeat;
+  background:image_ur("znss/search_book_white.png") no-repeat;
 }
 .edu{
-  background:url(../images/search_edu_white.png) no-repeat;
+  background:image_ur("znss/search_edu_white.png") no-repeat;
 }
 .duxiu{
-  background:url(../images/search_duxiu_white.png) no-repeat;
+  background:image_ur("znss/search_duxiu_white.png") no-repeat;
 }
 
 
@@ -1743,7 +1743,7 @@ ul.searchtitle li.hover a {
 }
 
 .anythingSlider-default .anythingControls a {
-  background:#777 url(../images/default.png) center -288px repeat-x;
+  background:#777 image_url("znss/default.png") center -288px repeat-x;
   color:#000;
   border-radius:0 0 5px 5px;
   -moz-border-radius:0 0 5px 5px;
@@ -1808,7 +1808,7 @@ ul.searchtitle li.hover a {
   height:330px;
   text-align:center;
   outline:0;
-  background:url(../img/default.png) no-repeat;
+  background:image_ur("znss/default.png") no-repeat;
   margin:-115px 0 0;
 }
 
@@ -1977,19 +1977,19 @@ ul.searchtitle li.hover a {
 }
 
 #slider_for,#slider_for2 {
-  background:url(../images/pagination_arrow.png) 43px -28px;
+  background:image_ur("znss/pagination_arrow.png") 43px -28px;
 }
 
 #slider_for:hover,#slider_for2:hover {
-  background:url(../images/pagination_arrow.png) 43px -7px;
+  background:image_ur("znss/pagination_arrow.png") 43px -7px;
 }
 
 #slider_next,#slider_next2 {
-  background:url(../images/pagination_arrow.png) 23px -28px;
+  background:image_ur("znss/pagination_arrow.png") 23px -28px;
 }
 
 #slider_next:hover,#slider_next2:hover {
-  background:url(../images/pagination_arrow.png) 23px -7px;
+  background:image_ur("znss/pagination_arrow.png") 23px -7px;
 }
 
 .thumbNav li,.thumbNav2 li {
@@ -2015,11 +2015,11 @@ ul.searchtitle li.hover a {
   margin:0 auto;
 }
 .Index_bg {
-  background:url(../images/pagination_arrow.png) -6px 22px;
+  background:image_ur("znss/pagination_arrow.png") -6px 22px;
 }
 
 .Index_current {
-  background:url(../images/pagination_arrow.png) -27px -47px;
+  background:image_ur("znss/pagination_arrow.png") -27px -47px;
 }
 
 .grid_2 {
@@ -2077,7 +2077,7 @@ ul.searchtitle li.hover a {
 .ui-tabs .ui-tabs-nav li.ui-tabs-active {
   margin-bottom:-1px;
   padding-bottom:1px;
-  background:url("../images/search_blue_bt.png") no-repeat;
+  background:image_ur("znss/search_blue_bt.png") no-repeat;
 }
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-active a,.ui-tabs .ui-tabs-nav li.ui-state-disabled a,.ui-tabs .ui-tabs-nav li.ui-tabs-loading a {
@@ -2155,7 +2155,7 @@ fieldset p label,fieldset p input {
 
 ul.navbar li.navbar1 a,ul.navbar li.navbar1 a:hover {
   color:#fff;
-  background:url('../images/search-blue bottom.png') no-repeat;
+  background:image_ur('"znss/search-blue bottom.png') no-repeat;
 }
 
 .anythingSlider-default .back a,.anythingSlider-default .back a:hover,.anythingSlider-default .back a.hover {
@@ -2171,7 +2171,7 @@ ul.navbar li.navbar1 a,ul.navbar li.navbar1 a:hover {
 #banner{
   width: 940px;
   height: 184px;
-  background: url(../images/banner1127.png) no-repeat;
+  background: image_url("znss/banner1127.png") no-repeat;
 }
 #egg{
   left: 395px;
@@ -2285,7 +2285,7 @@ ul.nav_second,ul.nav_second * {
 ul.nav_second {
   position:relative;
   max-width:100%;
-  background-image:url("../page image/header960-0.png");
+  background-image:image_url("znss/header960-0.png");
   left:-15px;
   top:0px;
   height:57px;
@@ -2461,7 +2461,7 @@ ul.tabbox li {
   list-style-type:none;
   text-align:center;
   height:24px;
-  background:url("../page image/menu white bar_new.png");
+  background-image:image_url("znss/menu_white_bar_new.png");
 }
 
 ul.tabbox li a {
@@ -2475,7 +2475,7 @@ ul.tabbox li:hover {
   list-style-type:none;
   width:210px;
   height:24px;
-  background:url("../page image/menu click bar_new.png") no-repeat;
+  background-image:image_url("znss/menu_click_bar_new_h.png");
   margin-left:0;
 }
 
@@ -2486,7 +2486,7 @@ ul.tabbox li:hover {
   list-style-type:none;
   width:210px;
   height:24px;
-  background:url("../page image/menu click bar_new.png") no-repeat;
+  background-image:image_url("znss/menu_click_bar_new.png");
   margin-left:0;
 }
 
@@ -2503,7 +2503,7 @@ ul.tabbox li.menu1 {
   color:#FFF;
   font-weight:700;
   width:156px;
-  background-image:url("../page image/menu red bar0.png");
+  background-image: image_url("znss/menu_red_bar0.png");
   text-align: left;
   padding-left: 60px;
   padding-top: 8px;
