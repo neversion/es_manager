@@ -1,5 +1,6 @@
 EsManager::Application.routes.draw do
-  get "main/s"
+  match "main/s" => "main#s", via: [:get, :post]
+  #post "main/s"
 
   get "main/parse"
   get "main/import"
