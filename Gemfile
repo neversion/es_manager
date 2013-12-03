@@ -55,3 +55,7 @@ group :development do
   gem 'pry'
   gem 'pry-nav'
 end
+
+#connect ms sql server
+#gem 'tiny_tds'
+#gem 'activerecord-sqlserver-adapter', git: 'https://github.com/Desarrollo-CeSPI/activerecord-sqlserver-adapter.git'

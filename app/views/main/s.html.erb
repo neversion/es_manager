@@ -68,25 +68,27 @@
   <div class="grid_3">
     <div class="left">
       <div class="tab_leftmenu">
-
-        <div id="content_2">
-          <ul class="tabbox">
-            <li class="menu1">搜索 - 分类结果</li>
-            <li><a href="<%= gen_all_url %>">全部</a></li>
-            <% @facets.each do |item| %>
-                <li><a href="<%= gen_facet_url(item['term']) %>"><%= code_2_name(item['term']) %> : <%= item['count'] %></a> </li>
-            <% end %>
-          </ul>
-          <ul class="tabbox" runat="server" id="OrderUl">
-            <li class="menu1">搜索 - 排序</li>
-            <li>
-              <a href="<%= gen_rel_sort_url %>">相关度</a>
-            </li>
-            <li>
-              <a href="<%= gen_time_sort_url %>">发布时间</a>
-            </li>
-          </ul>
-        </div>
+        <% if !@facets.nil? %>
+            <div id="content_2">
+              <ul class="tabbox">
+                <li class="menu1">搜索 - 分类结果</li>
+                <li><a href="<%= gen_all_url %>">全部</a></li>
+                <% @facets.each do |item| %>
+                    <li><a href="<%= gen_facet_url(item['term']) %>"><%= code_2_name(item['term']) %>
+                      : <%= item['count'] %></a></li>
+                <% end %>
+              </ul>
+              <ul class="tabbox" runat="server" id="OrderUl">
+                <li class="menu1">搜索 - 排序</li>
+                <li>
+                  <a href="<%= gen_rel_sort_url %>">相关度</a>
+                </li>
+                <li>
+                  <a href="<%= gen_time_sort_url %>">发布时间</a>
+                </li>
+              </ul>
+            </div>
+        <% end %>
       </div>
     </div>
   </div>
@@ -103,41 +105,56 @@
               <%= text_field_tag :q, nil, class: "alySearch" %>
               <%= submit_tag "搜索", class: 'alySmt' %>
           <% end %>
-          <span id="CostSpan" class="rstNum">找到相关页面约为 <%= @count %>  条</span>
+          <% if @count %>
+              <span id="CostSpan" class="rstNum">找到相关页面约为 <%= @count %>  条</span>
+          <% end %>
           <!-最新公告->
-          <% if params[:q].nil? || params[:q]==""  %>
-          <div class="noticeHeader">最新公告</div>
-          <ul class="results">
-            <li class="record">
-              <div class="title">
-              </div>
-              <div>
-              </div>
-            </li>
-          </ul>
+          <% if params[:q].nil? || params[:q]=="" %>
+              <div class="noticeHeader">最新公告</div>
+              <ul class="results" style="display:none;">
+                <li class="record">
+                  <div class="title">
+                  </div>
+                  <div>
+                  </div>
+                </li>
+              </ul>
           <% end %>
           <!-End 最新公告->
-          <ul class="results">
-            <% @list.each do |item| %>
-            <li class="record">
-              <div class="title"><a target="_blank" href='<%= item['url'] %>'><%= item['title'] %></a>
-                <span id="resultRp_ctl01_TimeLb" class="time"><%= parse_timestamp(item['create_timestamp']) %></span></div>
-              <div>
-                <span class="body"><%= truncate(item['body'], length: 100) %></span>
-              </div>
-            </li>
-            <% end %>
-          </ul>
-            <ul class="paging" runat="server" id="PagingUl">
-              <li>
-                <a href='<%= gen_pre_url %>'>上一页</a>
-              </li>
-              <li>
-                <a href='<%= gen_next_url %>'>下一页</a>
-              </li>
-              <li class="clear"></li>
-            </ul>
-
+          <% if !@list.nil? %>
+              <ul class="results">
+                <% @list.each do |item| %>
+                    <li class="record">
+                      <div class="title"><a target="_blank" href='<%= item['url'] %>'><%= item['title'] %></a>
+                        <span id="resultRp_ctl01_TimeLb" class="time"><%= parse_timestamp(item['create_timestamp']) %></span>
+                      </div>
+                      <div>
+                        <span class="body"><%= truncate(item['body'], length: 100) %></span>
+                      </div>
+                    </li>
+                <% end %>
+              </ul>
+              <% if !params[:q].nil? && params[:q]!="" %>
+                  <ul class="paging" runat="server" id="PagingUl">
+                    <li>
+                      <a href='<%= gen_first_url %>'>首页</a>
+                    </li>
+                    <li>
+                      <a href='<%= gen_pre_url %>'>«上一页</a>
+                    </li>
+                    <li>
+                      <%= gen_cur_page %>
+                    </li>
+                    <li>
+                      <a href='<%= gen_next_url %>'>下一页»</a>
+                    </li>
+                    <li>
+                      <a href='<%= gen_last_url %>'>末页</a>
+                    </li>
+                    <li class="clear"></li>
+                  </ul>
+              <% end %>
+          <% end %>
         </div>
       </ul>
 

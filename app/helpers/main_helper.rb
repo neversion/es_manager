@@ -70,4 +70,15 @@ module MainHelper
     request.url + "&s=1"
   end
 
+  def gen_cur_page
+    params[:p]
+  end
+
+  def gen_first_url
+    return request.url.gsub(/&p=[0-9]+/,'&p=1')
+  end
+
+  def gen_last_url
+    return request.url.gsub(/&p=[0-9]+/,"&p=#{@page_count}")
+  end
 end

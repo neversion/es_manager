@@ -1,9 +1,4 @@
 class MainController < ApplicationController
-
-  def import
-    #import_data
-  end
-
   def s
     @result={}
     if params[:q]
@@ -24,12 +19,15 @@ class MainController < ApplicationController
       @list=[]
       @facets =@result['facets']['type_id']['terms']
       @result['hits']['hits'].each do |item|
-        #item['_source']['title']=item['highlight']['title'][0] unless item['highlight']['title'].nil?
-        #item['_source']['body']=item['highlight']['body'][0] unless item['highlight']['body'].nil?
         @list << item['_source']
       end
     else
       #最新公告
+      @result = search_with_facet('厦门大学图书馆', 1, 10, 'create_timestamp', '32')
+      @list=[]
+      @result['hits']['hits'].each do |item|
+        @list << item['_source']
+      end
     end
 
     respond_to do |format|
