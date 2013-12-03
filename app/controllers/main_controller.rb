@@ -1,4 +1,5 @@
 class MainController < ApplicationController
+  layout "znss"
   def s
     @result={}
     if params[:q]
