@@ -1,5 +1,6 @@
 class MainController < ApplicationController
   layout "znss"
+
   def s
     @result={}
     if params[:q]
@@ -24,7 +25,8 @@ class MainController < ApplicationController
       end
     else
       #最新公告
-      @result = search_with_facet('厦门大学图书馆', 1, 10, 'create_timestamp', '32')
+      #@result = search_with_facet('厦门大学图书馆', 1, 10, 'create_timestamp', '32')
+      @result = get_notices 1,10
       @list=[]
       @result['hits']['hits'].each do |item|
         @list << item['_source']
@@ -87,8 +89,8 @@ class MainController < ApplicationController
     body_json = {
         "explain" => true,
         :query => {"query_string" =>
-                       {   "fields" => ["title^2", "body" , "author", "source" ],
-                           "query" => "'#{q}"}},
+                       {"fields" => ["title^2", "body", "author", "source"],
+                        "query" => "'#{q}"}},
         size: size, #每次返回结果数量
         from: (page-1)*size, #偏移量 用于分页
         facets: {
@@ -97,7 +99,7 @@ class MainController < ApplicationController
         },
         "highlight" => {
             "fields" => {
-                "title" =>{ },
+                "title" => {},
                 "body" => {}
             }
         }
@@ -108,7 +110,7 @@ class MainController < ApplicationController
     end
     if !filter_id.nil?
       body_json[:filter]= {
-          "term"=>{"cat_id"=>filter_id}
+          "term" => {"cat_id" => filter_id}
       }
       #body_json = {
       #    #"filtered" => {
@@ -130,6 +132,22 @@ class MainController < ApplicationController
 
     @client.search index: 'znss', body: body_json
   end
+
+  def get_notices page, size
+    host = "http://210.34.4.113:9200"
+    @client = Elasticsearch::Client.new host: host, log: true
+    body_json = {
+            "filter" => {
+                "term" => { "cat_id" => 32}
+            },
+
+        size: size, #每次返回结果数量
+        from: (page-1)*size, #偏移量 用于分页
+        "sort" => {'create_timestamp' => 'desc'}
+    }
+    @client.search index: 'znss', body: body_json
+  end
+
 
   def import_data
     File.open "#{Rails.root}/public/data/json_librarian_2013_11_26.txt" do |f|
