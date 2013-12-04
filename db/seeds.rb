@@ -95,7 +95,7 @@ def mapping_with_new_index
                              mappings: {
                                  item: {
                                      properties: {
-                                         title: {type: 'string', analyzer: 'ik', store: 'yes', boost: 3.0},
+                                         title: {type: 'string', analyzer: 'ik', store: 'yes'},
                                          creator: {type: 'string', analyzer: 'ik', store: 'yes'},
                                          subject: {type: 'string', analyzer: 'ik', store: 'yes'},
                                          description: {type: 'string', analyzer: 'ik', store: 'yes'},
