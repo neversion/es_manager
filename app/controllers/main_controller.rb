@@ -85,7 +85,10 @@ class MainController < ApplicationController
     host = "http://210.34.4.113:9200"
     @client = Elasticsearch::Client.new host: host, log: true
     body_json = {
-        :query => {"query_string" => {"query" => "'#{q}"}},
+        "explain" => true,
+        :query => {"query_string" =>
+                       {   "fields" => ["title^2", "body" , "author", "source" ],
+                           "query" => "'#{q}"}},
         size: size, #每次返回结果数量
         from: (page-1)*size, #偏移量 用于分页
         facets: {
