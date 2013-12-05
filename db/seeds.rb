@@ -218,6 +218,17 @@ def import_znss_data file_list
 
 end
 
+#去除首尾特殊空格
+def remove_special str
+  while str[0]=='　'
+    str = str[1..str.length-1]
+  end
+  while str[str.length-1]=='　'
+    str = str[0..str.length-2]
+  end
+  return str
+end
+
 #mapping_with_new_index
 #import_test_data "/hd/metadata/data/guji"
 
@@ -225,4 +236,3 @@ end
 
 znss_mapping
 import_znss_data  ["json_database_2013_11_26.txt","json_Free_2013_11_26.txt","json_librarian_2013_11_26.txt","json_homepage_2013_12_4.txt"]
-
