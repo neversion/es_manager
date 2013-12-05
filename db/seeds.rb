@@ -203,13 +203,21 @@ def import_znss_data file_list
       host = "http://210.34.4.113:9200"
       @client = Elasticsearch::Client.new host: host, log: true
       json_obj.each do |item|
-        #清理ik解析字段的所有前导空格
-        item['fields']['title'] = remove_special item['fields']['title']
-        item['fields']['body'] = remove_special item['fields']['body']
-        item['fields']['author'] = remove_special item['fields']['author']
-        item['fields']['source'] = remove_special item['fields']['source']
-        item['fields']['tag'] =  remove_special item['fields']['tag']
-        @client.index index: 'znss', type: 'item', id: item['fields']['id'], body: item['fields']
+        #if item['fields']['id'] == "homepage_667" || item['fields']['id'] == "homepage_691" || item['fields']['id'] == "homepage_702"
+        #  item['fields']['body'] = remove_special item['fields']['body']
+        #  binding.pry
+        #end
+        ##清理ik解析字段的所有前导空格
+        #item['fields']['title'] = remove_special item['fields']['title']
+        #item['fields']['body'] = remove_special item['fields']['body']
+        #item['fields']['author'] = remove_special item['fields']['author']
+        #item['fields']['source'] = remove_special item['fields']['source']
+        #item['fields']['tag'] = remove_special item['fields']['tag']
+        begin
+        @client.index index: 'znss', type: 'item', id: item['fields']['id'], body: rebulid_json(item['fields'])
+        rescue
+          puts item['fields']
+        end
         puts item['fields']['id']
       end
     end
@@ -229,7 +237,42 @@ def remove_special str
     end
     str = str.strip
   end
-  return str
+  result = str
+  return result
+end
+
+def rebulid_json json
+  title = remove_special(json["title"])
+  body = remove_special(json["body"])
+  author =remove_special(json["author"])
+  source =remove_special(json["source"])
+  tag =remove_special(json["tag"])
+  result = {
+      title: title,
+      body: body,
+      type_id: json["type_id"],
+      cat_id: json["cat_id"],
+      url: json["url"],
+      author: author,
+      thumbnail: json["thumbnail"],
+      source: source,
+      create_timestamp: json["create_timestamp"],
+      update_timestamp: json["update_timestamp"],
+      hit_num: json["hit_num"],
+      focus_count: json["focus_count"],
+      grade: json["grade"],
+      comment_count: json["comment_count"],
+      boost: json["boost"],
+      integer_1: json["integer_1"],
+      integer_2: json["integer_2"],
+      integer_3: json["integer_3"],
+      tag: tag,
+      display_text: json["display_text"]
+  }
+  #if json['id']== "homepage_667"
+  #  binding.pry
+  #end
+  return result
 end
 
 #mapping_with_new_index
@@ -237,5 +280,12 @@ end
 
 #update_mapping "oai_ik"
 
-znss_mapping
-import_znss_data  ["json_database_2013_11_26.txt","json_Free_2013_11_26.txt","json_librarian_2013_11_26.txt","json_homepage_2013_12_4.txt"]
+#znss_mapping
+import_znss_data ["json_homepage_2013_12_4.txt"]
+
+#s = "　致：厦门大学  读秀知识库于2006年9月中旬在厦门大学图书馆试用资源中开始对厦门大学师生提供试用，但是在试用过程中读者反在找到所需资源的最后通过''文献传递''到自己的信箱中时，读者一直是接收不到，现该问题已解决，请厦门大学师生放心试用，特此通知！               北京读秀有限责任公司"
+#binding.pry
+#a = remove_special s
+#puts s
+#binding.pry
+
