@@ -163,7 +163,7 @@ def znss_mapping
                              mappings: {
                                  item: {
                                      properties: {
-                                         r_id: {type: 'string', index: 'no_analyzed', store: 'yes'},
+                                         #r_id: {type: 'string', index: 'no_analyzed', store: 'yes'},
                                          title: {type: 'string', analyzer: 'chinese', store: 'yes'},
                                          body: {type: 'string', analyzer: 'chinese', store: 'yes'},
                                          type_id: {type: 'short', store: 'yes'},
@@ -215,5 +215,5 @@ end
 #update_mapping "oai_ik"
 
 znss_mapping
-import_znss_data  ["json_database_2013_11_26.txt","json_Free_2013_11_26.txt","json_librarian_2013_11_26.txt","json_homepage_2013_12_4.txt"]
+#import_znss_data  ["json_database_2013_11_26.txt","json_Free_2013_11_26.txt","json_librarian_2013_11_26.txt","json_homepage_2013_12_4.txt"]
 
