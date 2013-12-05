@@ -204,9 +204,12 @@ def import_znss_data file_list
       @client = Elasticsearch::Client.new host: host, log: true
       json_obj.each do |item|
         @client.index index: 'znss', type: 'item', id: item['fields']['id'], body: item['fields']
+        puts item['fields']['id']
       end
     end
+    puts "#{file_name} done"
   end
+
 end
 
 #mapping_with_new_index
