@@ -163,15 +163,15 @@ def znss_mapping
                              mappings: {
                                  item: {
                                      properties: {
-                                         r_id: {type: 'string', index: 'no_analyzed', store: 'yes'},
-                                         title: {type: 'string', analyzer: 'chinese', store: 'yes'},
-                                         body: {type: 'string', analyzer: 'chinese', store: 'yes'},
+                                         #r_id: {type: 'string', index: 'no_analyzed', store: 'yes'},
+                                         title: {type: 'string', analyzer: 'ik', store: 'yes'},
+                                         body: {type: 'string', analyzer: 'ik', store: 'yes'},
                                          type_id: {type: 'short', store: 'yes'},
                                          cat_id: {type: 'short', store: 'yes'},
                                          url: {type: 'string', store: 'yes'},
-                                         author: {type: 'string', analyzer: 'chinese', store: 'yes'},
+                                         author: {type: 'string', analyzer: 'ik', store: 'yes'},
                                          thumbnail: {type: 'string', store: 'yes'},
-                                         source: {type: 'string', analyzer: 'chinese', store: 'yes'},
+                                         source: {type: 'string', analyzer: 'ik', store: 'yes'},
                                          create_timestamp: {type: 'long', store: 'yes'},
                                          update_timestamp: {type: 'long', store: 'yes'},
                                          hit_num: {type: 'integer', store: 'yes'},
@@ -182,7 +182,7 @@ def znss_mapping
                                          integer_1: {type: 'integer', store: 'yes'},
                                          integer_2: {type: 'integer', store: 'yes'},
                                          integer_3: {type: 'integer', store: 'yes'},
-                                         tag: {type: 'string', analyzer: 'chinese', store: 'yes'},
+                                         tag: {type: 'string', analyzer: 'ik', store: 'yes'},
                                          display_text: {type: 'string', store: 'yes'}
                                      }
                                  }
@@ -214,6 +214,6 @@ end
 
 #update_mapping "oai_ik"
 
-znss_mapping
+#znss_mapping
 import_znss_data  ["json_database_2013_11_26.txt","json_Free_2013_11_26.txt","json_librarian_2013_11_26.txt","json_homepage_2013_12_4.txt"]
 
