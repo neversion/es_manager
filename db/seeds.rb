@@ -204,11 +204,11 @@ def import_znss_data file_list
       @client = Elasticsearch::Client.new host: host, log: true
       json_obj.each do |item|
         #清理ik解析字段的所有前导空格
-        item['fields']['title'] = item['fields']['title'].strip unless item['fields']['title'].nil?
-        item['fields']['body'] = item['fields']['body'].strip unless item['fields']['body'].nil?
-        item['fields']['author'] = item['fields']['author'].strip unless item['fields']['author'].nil?
-        item['fields']['source'] = item['fields']['source'].strip unless item['fields']['source'].nil?
-        item['fields']['tag'] = item['fields']['tag'].strip unless item['fields']['tag'].nil?
+        item['fields']['title'] = remove_special item['fields']['title'].strip
+        item['fields']['body'] = remove_special item['fields']['body'].strip
+        item['fields']['author'] = remove_special item['fields']['author'].strip
+        item['fields']['source'] = remove_special item['fields']['source'].strip
+        item['fields']['tag'] =  remove_special item['fields']['tag'].strip
         @client.index index: 'znss', type: 'item', id: item['fields']['id'], body: item['fields']
         puts item['fields']['id']
       end
@@ -218,13 +218,16 @@ def import_znss_data file_list
 
 end
 
-#去除首尾特殊空格
+#去除首尾普通空格及特殊空格
 def remove_special str
-  while str[0]=='　'
-    str = str[1..str.length-1]
-  end
-  while str[str.length-1]=='　'
-    str = str[0..str.length-2]
+  if !str.nil?
+    while str[0]=='　'
+      str = str[1..str.length-1]
+    end
+    while str[str.length-1]=='　'
+      str = str[0..str.length-2]
+    end
+    str = str.strip
   end
   return str
 end
