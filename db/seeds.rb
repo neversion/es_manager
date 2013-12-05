@@ -71,7 +71,7 @@ end
 
 def get_field_value xml_doc, xpath
   result=''
-  xml_doc.xpath(xpath).each_with_index do |item,index|
+  xml_doc.xpath(xpath).each_with_index do |item, index|
     if index==0
       result=item.text.strip
     else
@@ -102,7 +102,7 @@ def mapping_with_new_index
                                          publisher: {type: 'string', store: 'yes'},
                                          contributor: {type: 'string', analyzer: 'ik', store: 'yes'},
                                          date: {type: 'date', store: 'yes'},
-                                         origin_date: {type: 'string',index: 'no', store: 'yes'},
+                                         origin_date: {type: 'string', index: 'no', store: 'yes'},
                                          type: {type: 'string', analyzer: 'ik', store: 'yes'},
                                          format: {type: 'string', index: 'not_analyzed', store: 'yes'},
                                          identifier: {type: 'string', index: 'not_analyzed', store: 'yes'},
@@ -133,7 +133,7 @@ def update_mapping index_name
               publisher: {type: 'string', store: 'yes'},
               contributor: {type: 'string', analyzer: 'ik', store: 'yes'},
               date: {type: 'date', store: 'yes'},
-              origin_date: {type: 'string',index: 'no', store: 'yes'},
+              origin_date: {type: 'string', index: 'no', store: 'yes'},
               type: {type: 'string', analyzer: 'ik', store: 'yes'},
               format: {type: 'string', index: 'not_analyzed', store: 'yes'},
               identifier: {type: 'string', index: 'not_analyzed', store: 'yes'},
@@ -148,20 +148,64 @@ def update_mapping index_name
   }
 end
 
-#导入站内搜索数据
-def import_znss_data file_name
-  File.open "#{Rails.root}/public/data/#{file_name}" do |f|
-    json_str=''
-    f.each_line do |line|
-      json_str=json_str+line
-    end
-    json_obj = JSON.parse json_str
-    host = "http://210.34.4.113:9200"
-    @client = Elasticsearch::Client.new host: host, log: true
-    json_obj.each do |item|
-      @client.index index: 'znss', type: 'item', id: item['fields']['id'], body: item['fields']
-    end
+#新建znss索引并设置mapping
+def znss_mapping
+  host = "http://210.34.4.113:9200"
+  @client = Elasticsearch::Client.new host: host, log: true
+  @client.indices.create index: 'znss',
+                         body: {
+                             settings: {
+                                 index: {
+                                     number_of_shards: 1,
+                                     number_of_replicas: 0,
+                                 }
+                             },
+                             mappings: {
+                                 item: {
+                                     properties: {
+                                         r_id: {type: 'string', index: 'no_analyzed', store: 'yes'},
+                                         title: {type: 'string', analyzer: 'chinese', store: 'yes'},
+                                         body: {type: 'string', analyzer: 'chinese', store: 'yes'},
+                                         type_id: {type: 'short', store: 'yes'},
+                                         cat_id: {type: 'short', store: 'yes'},
+                                         url: {type: 'string', store: 'yes'},
+                                         author: {type: 'string', analyzer: 'chinese', store: 'yes'},
+                                         thumbnail: {type: 'string', store: 'yes'},
+                                         source: {type: 'string', analyzer: 'chinese', store: 'yes'},
+                                         create_timestamp: {type: 'long', store: 'yes'},
+                                         update_timestamp: {type: 'long', store: 'yes'},
+                                         hit_num: {type: 'integer', store: 'yes'},
+                                         focus_count: {type: 'integer', store: 'yes'},
+                                         grade: {type: 'short', store: 'yes'},
+                                         comment_count: {type: 'integer', store: 'yes'},
+                                         boost: {type: 'integer', store: 'yes'},
+                                         integer_1: {type: 'integer', store: 'yes'},
+                                         integer_2: {type: 'integer', store: 'yes'},
+                                         integer_3: {type: 'integer', store: 'yes'},
+                                         tag: {type: 'string', analyzer: 'chinese', store: 'yes'},
+                                         display_text: {type: 'string', store: 'yes'}
+                                     }
+                                 }
+                             }
+                         }
 
+end
+
+#导入站内搜索数据
+def import_znss_data file_list
+  file_list.each do |file_name|
+    File.open "#{Rails.root}/public/data/#{file_name}" do |f|
+      json_str=''
+      f.each_line do |line|
+        json_str=json_str+line
+      end
+      json_obj = JSON.parse json_str
+      host = "http://210.34.4.113:9200"
+      @client = Elasticsearch::Client.new host: host, log: true
+      json_obj.each do |item|
+        @client.index index: 'znss', type: 'item', id: item['fields']['id'], body: item['fields']
+      end
+    end
   end
 end
 
@@ -170,5 +214,6 @@ end
 
 #update_mapping "oai_ik"
 
-#import_znss_data  "json_homepage_2013_12_4.txt"
+znss_mapping
+import_znss_data  ["json_database_2013_11_26.txt","json_Free_2013_11_26.txt","json_librarian_2013_11_26.txt","json_homepage_2013_12_4.txt"]
 
