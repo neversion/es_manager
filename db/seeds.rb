@@ -204,11 +204,11 @@ def import_znss_data file_list
       @client = Elasticsearch::Client.new host: host, log: true
       json_obj.each do |item|
         #清理ik解析字段的所有前导空格
-        item['fields']['title'] = remove_special item['fields']['title'].strip
-        item['fields']['body'] = remove_special item['fields']['body'].strip
-        item['fields']['author'] = remove_special item['fields']['author'].strip
-        item['fields']['source'] = remove_special item['fields']['source'].strip
-        item['fields']['tag'] =  remove_special item['fields']['tag'].strip
+        item['fields']['title'] = remove_special item['fields']['title']
+        item['fields']['body'] = remove_special item['fields']['body']
+        item['fields']['author'] = remove_special item['fields']['author']
+        item['fields']['source'] = remove_special item['fields']['source']
+        item['fields']['tag'] =  remove_special item['fields']['tag']
         @client.index index: 'znss', type: 'item', id: item['fields']['id'], body: item['fields']
         puts item['fields']['id']
       end
