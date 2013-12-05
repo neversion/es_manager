@@ -203,6 +203,12 @@ def import_znss_data file_list
       host = "http://210.34.4.113:9200"
       @client = Elasticsearch::Client.new host: host, log: true
       json_obj.each do |item|
+        #清理ik解析字段的所有前导空格
+        item['fields']['title'] = item['fields']['title'].strip
+        item['fields']['body'] = item['fields']['body'].strip
+        item['fields']['author'] = item['fields']['author'].strip
+        item['fields']['source'] = item['fields']['source'].strip
+        item['fields']['tag'] = item['fields']['tag'].strip
         @client.index index: 'znss', type: 'item', id: item['fields']['id'], body: item['fields']
         puts item['fields']['id']
       end
@@ -217,6 +223,6 @@ end
 
 #update_mapping "oai_ik"
 
-#znss_mapping
+znss_mapping
 import_znss_data  ["json_database_2013_11_26.txt","json_Free_2013_11_26.txt","json_librarian_2013_11_26.txt","json_homepage_2013_12_4.txt"]
 
