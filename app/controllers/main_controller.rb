@@ -149,20 +149,4 @@ class MainController < ApplicationController
   end
 
 
-  def import_data
-    File.open "#{Rails.root}/public/data/json_librarian_2013_11_26.txt" do |f|
-      json_str=''
-      f.each_line do |line|
-        json_str=json_str+line
-      end
-      json_obj = JSON.parse json_str
-      host = "http://210.34.4.113:9200"
-      @client = Elasticsearch::Client.new host: host, log: true
-      json_obj.each do |item|
-        @client.index index: 'znss', type: 'item', id: item['fields']['id'], body: item['fields']
-      end
-
-    end
-  end
-
 end

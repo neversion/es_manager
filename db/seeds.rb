@@ -148,8 +148,27 @@ def update_mapping index_name
   }
 end
 
+#导入站内搜索数据
+def import_znss_data file_name
+  File.open "#{Rails.root}/public/data/#{file_name}" do |f|
+    json_str=''
+    f.each_line do |line|
+      json_str=json_str+line
+    end
+    json_obj = JSON.parse json_str
+    host = "http://210.34.4.113:9200"
+    @client = Elasticsearch::Client.new host: host, log: true
+    json_obj.each do |item|
+      @client.index index: 'znss', type: 'item', id: item['fields']['id'], body: item['fields']
+    end
+
+  end
+end
+
 #mapping_with_new_index
 #import_test_data "/hd/metadata/data/guji"
 
 #update_mapping "oai_ik"
+
+#import_znss_data  "json_homepage_2013_12_4.txt"
 
