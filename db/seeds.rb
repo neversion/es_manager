@@ -95,15 +95,15 @@ def mapping_with_new_index
                              mappings: {
                                  item: {
                                      properties: {
-                                         title: {type: 'string', analyzer: 'ik', store: 'yes'},
-                                         creator: {type: 'string', analyzer: 'ik', store: 'yes'},
-                                         subject: {type: 'string', analyzer: 'ik', store: 'yes'},
-                                         description: {type: 'string', analyzer: 'ik', store: 'yes'},
+                                         title: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                         creator: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                         subject: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                         description: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
                                          publisher: {type: 'string', store: 'yes'},
-                                         contributor: {type: 'string', analyzer: 'ik', store: 'yes'},
+                                         contributor: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
                                          date: {type: 'date', store: 'yes'},
                                          origin_date: {type: 'string', index: 'no', store: 'yes'},
-                                         type: {type: 'string', analyzer: 'ik', store: 'yes'},
+                                         type: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
                                          format: {type: 'string', index: 'not_analyzed', store: 'yes'},
                                          identifier: {type: 'string', index: 'not_analyzed', store: 'yes'},
                                          source: {type: 'string', index: 'not_analyzed', store: 'yes'},
@@ -126,15 +126,15 @@ def update_mapping index_name
   client.indices.put_mapping index: index_name, type: 'item', body: {
       item: {
           properties: {
-              title: {type: 'string', analyzer: 'ik', store: 'yes'},
-              creator: {type: 'string', analyzer: 'ik', store: 'yes'},
-              subject: {type: 'string', analyzer: 'ik', store: 'yes'},
-              description: {type: 'string', analyzer: 'ik', store: 'yes'},
+              title: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+              creator: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+              subject: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+              description: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
               publisher: {type: 'string', store: 'yes'},
-              contributor: {type: 'string', analyzer: 'ik', store: 'yes'},
+              contributor: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
               date: {type: 'date', store: 'yes'},
               origin_date: {type: 'string', index: 'no', store: 'yes'},
-              type: {type: 'string', analyzer: 'ik', store: 'yes'},
+              type: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
               format: {type: 'string', index: 'not_analyzed', store: 'yes'},
               identifier: {type: 'string', index: 'not_analyzed', store: 'yes'},
               source: {type: 'string', index: 'not_analyzed', store: 'yes'},
