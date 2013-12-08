@@ -126,7 +126,7 @@ def update_mapping index_name
   client.indices.put_mapping index: index_name, type: 'item', body: {
       item: {
           properties: {
-              title: {type: 'string', analyzer: 'ik', store: 'yes', boost: 3.0},
+              title: {type: 'string', analyzer: 'ik', store: 'yes'},
               creator: {type: 'string', analyzer: 'ik', store: 'yes'},
               subject: {type: 'string', analyzer: 'ik', store: 'yes'},
               description: {type: 'string', analyzer: 'ik', store: 'yes'},
@@ -163,15 +163,14 @@ def znss_mapping
                              mappings: {
                                  item: {
                                      properties: {
-                                         #r_id: {type: 'string', index: 'no_analyzed', store: 'yes'},
-                                         title: {type: 'string', analyzer: 'ik', store: 'yes'},
-                                         body: {type: 'string', analyzer: 'ik', store: 'yes'},
+                                         title: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                         body: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
                                          type_id: {type: 'short', store: 'yes'},
                                          cat_id: {type: 'short', store: 'yes'},
                                          url: {type: 'string', store: 'yes'},
-                                         author: {type: 'string', analyzer: 'ik', store: 'yes'},
+                                         author: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
                                          thumbnail: {type: 'string', store: 'yes'},
-                                         source: {type: 'string', analyzer: 'ik', store: 'yes'},
+                                         source: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
                                          create_timestamp: {type: 'long', store: 'yes'},
                                          update_timestamp: {type: 'long', store: 'yes'},
                                          hit_num: {type: 'integer', store: 'yes'},
@@ -182,8 +181,8 @@ def znss_mapping
                                          integer_1: {type: 'integer', store: 'yes'},
                                          integer_2: {type: 'integer', store: 'yes'},
                                          integer_3: {type: 'integer', store: 'yes'},
-                                         tag: {type: 'string', analyzer: 'ik', store: 'yes'},
-                                         display_text: {type: 'string', store: 'yes'}
+                                         tag: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                         display_text: {type: 'string', store: 'yes'},
                                      }
                                  }
                              }
@@ -214,7 +213,7 @@ def import_znss_data file_list
         #item['fields']['source'] = remove_special item['fields']['source']
         #item['fields']['tag'] = remove_special item['fields']['tag']
         begin
-        @client.index index: 'znss', type: 'item', id: item['fields']['id'], body: rebulid_json(item['fields'])
+          @client.index index: 'znss', type: 'item', id: item['fields']['id'], body: rebulid_json(item['fields'])
         rescue
           puts item['fields']
         end
@@ -280,8 +279,8 @@ end
 
 #update_mapping "oai_ik"
 
-#znss_mapping
-import_znss_data ["json_homepage_2013_12_4.txt"]
+znss_mapping
+#import_znss_data ["json_homepage_2013_12_4.txt"]
 
 #s = "　致：厦门大学  读秀知识库于2006年9月中旬在厦门大学图书馆试用资源中开始对厦门大学师生提供试用，但是在试用过程中读者反在找到所需资源的最后通过''文献传递''到自己的信箱中时，读者一直是接收不到，现该问题已解决，请厦门大学师生放心试用，特此通知！               北京读秀有限责任公司"
 #binding.pry
