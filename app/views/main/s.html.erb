@@ -129,7 +129,7 @@
                         <span id="resultRp_ctl01_TimeLb" class="time"><%= parse_timestamp(item['create_timestamp']) %></span>
                       </div>
                       <div class="body">
-                        <%= sanitize item['body'] %>
+                        <%= truncate(sanitize(item['body']),length: 100) %>
                       </div>
                     </li>
                 <% end %>
