@@ -106,7 +106,7 @@
               <%= submit_tag "搜索", class: 'alySmt' %>
           <% end %>
           <% if @count %>
-              <span id="CostSpan" class="rstNum">找到相关页面约为 <%= @count %>  条</span>
+              <span id="CostSpan" class="rstNum">找到相关页面约为 <em><%= @count %></em>  条</span>
           <% end %>
           <!-最新公告->
           <% if params[:q].nil? || params[:q]=="" %>
