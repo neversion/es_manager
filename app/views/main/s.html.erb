@@ -129,8 +129,12 @@
                         <span id="resultRp_ctl01_TimeLb" class="time"><%= parse_timestamp(item['create_timestamp']) %></span>
                       </div>
                       <div class="body">
-                        <%= truncate(sanitize(item['body']),length: 100) %>
-                      </div>
+                        <% if params[:q].nil? || params[:q]=="" %>
+                            <%= truncate item['body'],length:100 %>
+                        <% else %>
+                            <%= sanitize(item['body']) %>
+                        <% end %>
+                        </div>
                     </li>
                 <% end %>
               </ul>
