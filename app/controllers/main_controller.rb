@@ -21,12 +21,14 @@ class MainController < ApplicationController
       @list=[]
       @facets =@result['facets']['type_id']['terms']
       @result['hits']['hits'].each do |item|
+        item['_source']['body'] =  item['highlight']['body'][0] unless item['highlight']['body'].nil?
+        item['_source']['title'] = item['highlight']['title'][0] unless item['highlight']['title'].nil?
         @list << item['_source']
+
       end
     else
       #最新公告
-      #@result = search_with_facet('厦门大学图书馆', 1, 10, 'create_timestamp', '32')
-      @result = get_notices 1,10
+      @result = get_notices 1, 10
       @list=[]
       @result['hits']['hits'].each do |item|
         @list << item['_source']
@@ -55,6 +57,12 @@ class MainController < ApplicationController
             cat_id: {terms: {field: 'cat_id'}}
         },
         "highlight" => {
+            "pre_tags" => [
+                "<em>"
+            ],
+            "post_tags" => [
+                "</em>"
+            ],
             "fields" => {
                 "title" => {},
                 "body" => {}
@@ -81,8 +89,6 @@ class MainController < ApplicationController
       #        :filter => {
       #                    "term"=>{"cat_id"=>filter_id}
       #                }
-      #
-      #
       #    }
       ##}
     end
@@ -94,9 +100,9 @@ class MainController < ApplicationController
     host = "http://210.34.4.113:9200"
     @client = Elasticsearch::Client.new host: host, log: true
     body_json = {
-            "filter" => {
-                "term" => { "cat_id" => 32}
-            },
+        "filter" => {
+            "term" => {"cat_id" => 32}
+        },
 
         size: size, #每次返回结果数量
         from: (page-1)*size, #偏移量 用于分页
@@ -104,6 +110,4 @@ class MainController < ApplicationController
     }
     @client.search index: 'znss', body: body_json
   end
-
-
 end
