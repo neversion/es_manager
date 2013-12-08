@@ -125,11 +125,11 @@
               <ul class="results">
                 <% @list.each do |item| %>
                     <li class="record">
-                      <div class="title"><a target="_blank" href='<%= item['url'] %>'><%= item['title'] %></a>
+                      <div class="title"><a target="_blank" href='<%= item['url'] %>'><%= sanitize item['title'] %></a>
                         <span id="resultRp_ctl01_TimeLb" class="time"><%= parse_timestamp(item['create_timestamp']) %></span>
                       </div>
-                      <div>
-                        <span class="body"><%= truncate(item['body'], length: 100) %></span>
+                      <div class="body">
+                        <%= sanitize item['body'] %>
                       </div>
                     </li>
                 <% end %>
