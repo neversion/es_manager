@@ -49,7 +49,7 @@ class MainController < ApplicationController
         "explain" => true,
         :query => {"query_string" =>
                        {"fields" => ["title^2", "body", "author", "source"],
-                        "query" => "'#{q}"}},
+                        "query" => "\"#{q}\""}},
         size: size, #每次返回结果数量
         from: (page-1)*size, #偏移量 用于分页
         facets: {
