@@ -215,9 +215,9 @@ def import_znss_data file_list
         begin
           @client.index index: 'znss', type: 'item', id: item['fields']['id'], body: rebulid_json(item['fields'])
         rescue
-          puts item['fields']
+          puts item['fields']['id']
         end
-        puts item['fields']['id']
+        #puts item['fields']['id']
       end
     end
     puts "#{file_name} done"
@@ -279,8 +279,8 @@ end
 
 #update_mapping "oai_ik"
 
-znss_mapping
-#import_znss_data ["json_homepage_2013_12_4.txt"]
+#znss_mapping
+import_znss_data ["json_homepage_2013_12_4.txt"]
 
 #s = "　致：厦门大学  读秀知识库于2006年9月中旬在厦门大学图书馆试用资源中开始对厦门大学师生提供试用，但是在试用过程中读者反在找到所需资源的最后通过''文献传递''到自己的信箱中时，读者一直是接收不到，现该问题已解决，请厦门大学师生放心试用，特此通知！               北京读秀有限责任公司"
 #binding.pry
