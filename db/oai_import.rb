@@ -69,11 +69,11 @@ def import_oai_test_data index_name, path
           "rights" => get_field_value(xml_doc, '//dc:rights'),
           "harvest_time" => Time.now
       }
+      
       begin
-        parsed_date = Date.parse(xml_doc.xpath('//dc:date').text) unless xml_doc.xpath('//dc:date').text==''
-        body_json["date"] = get_field_value(xml_doc, '//dc:date')
+        body_json["date"] = Date.parse(xml_doc.xpath('//dc:date').text) unless xml_doc.xpath('//dc:date').text==''
       rescue
-        body_json["date"] = "1000-00-00"
+        #body_json["date"] = "1000-00-00"
       end
 
       begin
