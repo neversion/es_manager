@@ -1,4 +1,5 @@
-def import_test_data path
+#导入oai数据
+def import_oai_test_data path
   file_name_list=[]
   Dir.foreach(path) do |file|
     file_name_list << file
@@ -280,7 +281,7 @@ end
 #update_mapping "oai_ik"
 
 #znss_mapping
-import_znss_data ["json_librarian_2013_11_26.txt"]
+#import_znss_data ["json_librarian_2013_11_26.txt"]
 
 #s = "　致：厦门大学  读秀知识库于2006年9月中旬在厦门大学图书馆试用资源中开始对厦门大学师生提供试用，但是在试用过程中读者反在找到所需资源的最后通过''文献传递''到自己的信箱中时，读者一直是接收不到，现该问题已解决，请厦门大学师生放心试用，特此通知！               北京读秀有限责任公司"
 #binding.pry
