@@ -1,14 +1,3 @@
-def get_field_value xml_doc, xpath
-  result=''
-  xml_doc.xpath(xpath).each_with_index do |item, index|
-    if index==0
-      result=item.text.strip
-    else
-      result = "#{result}|||#{item.text.strip}"
-    end
-  end
-  return result
-end
 
 def mapping_with_new_index
   host = "http://210.34.4.113:9200"
