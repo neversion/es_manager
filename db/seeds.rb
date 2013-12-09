@@ -95,15 +95,15 @@ def mapping_with_new_index
                              mappings: {
                                  item: {
                                      properties: {
-                                         title: {type: 'string', analyzer: 'ik', store: 'yes'},
-                                         creator: {type: 'string', analyzer: 'ik', store: 'yes'},
-                                         subject: {type: 'string', analyzer: 'ik', store: 'yes'},
-                                         description: {type: 'string', analyzer: 'ik', store: 'yes'},
+                                         title: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                         creator: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                         subject: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                         description: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
                                          publisher: {type: 'string', store: 'yes'},
-                                         contributor: {type: 'string', analyzer: 'ik', store: 'yes'},
+                                         contributor: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
                                          date: {type: 'date', store: 'yes'},
                                          origin_date: {type: 'string', index: 'no', store: 'yes'},
-                                         type: {type: 'string', analyzer: 'ik', store: 'yes'},
+                                         type: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
                                          format: {type: 'string', index: 'not_analyzed', store: 'yes'},
                                          identifier: {type: 'string', index: 'not_analyzed', store: 'yes'},
                                          source: {type: 'string', index: 'not_analyzed', store: 'yes'},
@@ -126,15 +126,15 @@ def update_mapping index_name
   client.indices.put_mapping index: index_name, type: 'item', body: {
       item: {
           properties: {
-              title: {type: 'string', analyzer: 'ik', store: 'yes'},
-              creator: {type: 'string', analyzer: 'ik', store: 'yes'},
-              subject: {type: 'string', analyzer: 'ik', store: 'yes'},
-              description: {type: 'string', analyzer: 'ik', store: 'yes'},
+              title: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+              creator: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+              subject: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+              description: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
               publisher: {type: 'string', store: 'yes'},
-              contributor: {type: 'string', analyzer: 'ik', store: 'yes'},
+              contributor: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
               date: {type: 'date', store: 'yes'},
               origin_date: {type: 'string', index: 'no', store: 'yes'},
-              type: {type: 'string', analyzer: 'ik', store: 'yes'},
+              type: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
               format: {type: 'string', index: 'not_analyzed', store: 'yes'},
               identifier: {type: 'string', index: 'not_analyzed', store: 'yes'},
               source: {type: 'string', index: 'not_analyzed', store: 'yes'},
@@ -193,7 +193,7 @@ end
 #导入站内搜索数据
 def import_znss_data file_list
   file_list.each do |file_name|
-    File.open "#{Rails.root}/public/data/#{file_name}" do |f|
+    File.open "#{Rails.root}/public/data/znss/#{file_name}" do |f|
       json_str=''
       f.each_line do |line|
         json_str=json_str+line
@@ -280,7 +280,7 @@ end
 #update_mapping "oai_ik"
 
 #znss_mapping
-import_znss_data ["json_homepage_2013_12_4.txt"]
+import_znss_data ["json_librarian_2013_11_26.txt"]
 
 #s = "　致：厦门大学  读秀知识库于2006年9月中旬在厦门大学图书馆试用资源中开始对厦门大学师生提供试用，但是在试用过程中读者反在找到所需资源的最后通过''文献传递''到自己的信箱中时，读者一直是接收不到，现该问题已解决，请厦门大学师生放心试用，特此通知！               北京读秀有限责任公司"
 #binding.pry
