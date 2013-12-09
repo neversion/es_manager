@@ -58,6 +58,7 @@ def import_oai_test_data index_name, path
           "descripton" => get_field_value(xml_doc, '//dc:descripton'),
           "publisher" => get_field_value(xml_doc, '//dc:publisher'),
           "contributor" => get_field_value(xml_doc, '//dc:contributor'),
+          "origin_date" => get_field_value(xml_doc, '//dc:date'),
           "type" => get_field_value(xml_doc, '//dc:type'),
           "format" => get_field_value(xml_doc, '//dc:format'),
           "identifier" => get_field_value(xml_doc, '//dc:identifier'),
@@ -72,14 +73,14 @@ def import_oai_test_data index_name, path
         parsed_date = Date.parse(xml_doc.xpath('//dc:date').text) unless xml_doc.xpath('//dc:date').text==''
         body_json["date"] = get_field_value(xml_doc, '//dc:date')
       rescue
-        puts xml_doc.xpath('//dc:date').text
+        body_json["date"] = "1000-00-00"
       end
 
       begin
         @client.index index: index_name, type: 'item', body: body_json
       rescue Exception=>e
-        logger.error e.message
-        logger.error body_json
+        Rails.logger.error e.message
+        Rails.logger.error body_json
       end
     end
     puts index
