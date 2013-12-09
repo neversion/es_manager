@@ -58,7 +58,6 @@ def import_oai_test_data index_name, path
           "descripton" => get_field_value(xml_doc, '//dc:descripton'),
           "publisher" => get_field_value(xml_doc, '//dc:publisher'),
           "contributor" => get_field_value(xml_doc, '//dc:contributor'),
-          "date" => get_field_value(xml_doc, '//dc:date'),
           "type" => get_field_value(xml_doc, '//dc:type'),
           "format" => get_field_value(xml_doc, '//dc:format'),
           "identifier" => get_field_value(xml_doc, '//dc:identifier'),
