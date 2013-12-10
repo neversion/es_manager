@@ -16,7 +16,10 @@ def create_index_mapping index_name
                                          creator: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
                                          subject: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
                                          description: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
-                                         publisher: {type: 'string',analyzer: 'ik_stem', store: 'yes'},
+                                         publisher: {type: 'multi_field', fields: {
+                                             publisher: {type: 'string', analyzer: 'ik_stem'},
+                                             untouched: {type: 'string', index: 'not_analyzed'}
+                                         }},
                                          contributor: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
                                          date: {type: 'date', store: 'yes'},
                                          origin_date: {type: 'string', index: 'no', store: 'yes'},
@@ -56,9 +59,9 @@ def import_oai_test_data index_name, path
           "creator" => get_field_value(xml_doc, '//dc:creator'),
           "subject" => get_field_value(xml_doc, '//dc:subject'),
           "descripton" => get_field_value(xml_doc, '//dc:descripton'),
-          "publisher" => get_field_value(xml_doc, '//dc:publisher'),
           "contributor" => get_field_value(xml_doc, '//dc:contributor'),
           "origin_date" => get_field_value(xml_doc, '//dc:date'),
+          "publisher" => get_field_value(xml_doc, '//dc:publisher'),
           "type" => get_field_value(xml_doc, '//dc:type'),
           "format" => get_field_value(xml_doc, '//dc:format'),
           "identifier" => get_field_value(xml_doc, '//dc:identifier'),
@@ -69,16 +72,16 @@ def import_oai_test_data index_name, path
           "rights" => get_field_value(xml_doc, '//dc:rights'),
           "harvest_time" => Time.now
       }
-      
+
+
       begin
         body_json["date"] = Date.parse(xml_doc.xpath('//dc:date').text) unless xml_doc.xpath('//dc:date').text==''
       rescue
         #body_json["date"] = "1000-00-00"
       end
-
       begin
         @client.index index: index_name, type: 'item', body: body_json
-      rescue Exception=>e
+      rescue Exception => e
         Rails.logger.error e.message
         Rails.logger.error body_json
       end
