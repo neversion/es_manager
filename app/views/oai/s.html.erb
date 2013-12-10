@@ -1,2 +1,7 @@
 <h1>Oai#s</h1>
 <p>Find me in app/views/oai/s.html.erb</p>
+<%= form_tag oai_s_path, method: 'get' do %>
+    <%= text_field_tag :q %>
+    <%= submit_tag "搜索" %>
+<% end %>
+
