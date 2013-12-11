@@ -60,7 +60,8 @@ def import_oai_test_data index_name, path
   @client = Elasticsearch::Client.new host: host, log: true
 
   (2..file_name_list.count-1).each do |index|
-    File.open "#{path}/#{file_name_list[index]}" do |file|
+    file_path = "#{path}/#{file_name_list[index]}"
+    File.open file_path do |file|
       xml_str=''
       file.each_line do |line|
         xml_str = xml_str+line
@@ -94,8 +95,8 @@ def import_oai_test_data index_name, path
       begin
         @client.index index: index_name, type: 'item', body: body_json
       rescue Exception => e
-        Rails.logger.error e.message
-        Rails.logger.error body_json
+        WORKER_LOG.error e.message
+        WORKER_LOG.error file_path
       end
     end
     puts index

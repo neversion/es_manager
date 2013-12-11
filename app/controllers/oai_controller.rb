@@ -58,10 +58,10 @@ class OaiController < ApplicationController
         from: (page-1)*size, #偏移量 用于分页
         facets: {
             publisher: {terms: {field: 'publisher.untouched'}},
-            subject: {terms: {field: 'subject'}},
+            subject: {terms: {field: 'subject.untouched'}},
             date: {terms: {field: 'date'}},
-            creator: {terms: {field: 'creator'}},
-            contributor: {terms: {field: 'contributor'}},
+            creator: {terms: {field: 'creator.untouched'}},
+            contributor: {terms: {field: 'contributor.untouched'}},
             rights: {terms: {field: 'rights'}}
         },
         "highlight" => {
@@ -101,6 +101,6 @@ class OaiController < ApplicationController
       ##}
     end
 
-    @client.search index: 'oai_ik_stem', body: body_json
+    @client.search index: 'oai_ik_stem_2', body: body_json
   end
 end
