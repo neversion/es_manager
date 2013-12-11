@@ -20,7 +20,13 @@ class OaiController < ApplicationController
         @page_count = @count/@page_size +1
       end
       @list=[]
-      #@facets =@result['facets']['type_id']['terms']
+      @facets=[]
+      @facets << @result['facets']['publisher']['terms']
+      @facets << @result['facets']['subject']['terms']
+      @facets << @result['facets']['date']['terms']
+      @facets << @result['facets']['creator']['terms']
+      @facets << @result['facets']['contributor']['terms']
+      @facets << @result['facets']['rights']['terms']
       @result['hits']['hits'].each do |item|
         item['_source']['body'] = item['highlight']['body'][0] unless item['highlight']['body'].nil?
         item['_source']['title'] = item['highlight']['title'][0] unless item['highlight']['title'].nil?
