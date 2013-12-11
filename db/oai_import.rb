@@ -13,17 +13,29 @@ def create_index_mapping index_name
                                  item: {
                                      properties: {
                                          title: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
-                                         creator: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
-                                         subject: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
-                                         description: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
-                                         publisher: {type: 'multi_field', fields: {
-                                             publisher: {type: 'string', analyzer: 'ik_stem'},
+                                         creator: {type: 'multi_field', fields: {
+                                             creator: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
                                              untouched: {type: 'string', index: 'not_analyzed'}
                                          }},
-                                         contributor: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                         subject: {type: 'multi_field', fields: {
+                                             subject: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                             untouched: {type: 'string', index: 'not_analyzed'}
+                                         }},
+                                         description: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                         publisher: {type: 'multi_field', fields: {
+                                             publisher: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                             untouched: {type: 'string', index: 'not_analyzed'}
+                                         }},
+                                         contributor: {type: 'multi_field', fields: {
+                                             contributor: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                             untouched: {type: 'string', index: 'not_analyzed'}
+                                         }},
                                          date: {type: 'date', store: 'yes'},
                                          origin_date: {type: 'string', index: 'no', store: 'yes'},
-                                         type: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                         type: {type: 'multi_field', fields: {
+                                             type: {type: 'string', analyzer: 'ik_stem', store: 'yes'},
+                                             untouched: {type: 'string', index: 'not_analyzed'}
+                                         }},
                                          format: {type: 'string', index: 'not_analyzed', store: 'yes'},
                                          identifier: {type: 'string', index: 'not_analyzed', store: 'yes'},
                                          source: {type: 'string', index: 'not_analyzed', store: 'yes'},
