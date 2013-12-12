@@ -20,13 +20,8 @@ class OaiController < ApplicationController
         @page_count = @count/@page_size +1
       end
       @list=[]
-      @facets=[]
-      @facets << @result['facets']['publisher']['terms']
-      @facets << @result['facets']['subject']['terms']
-      @facets << @result['facets']['histo1']['terms']
-      @facets << @result['facets']['creator']['terms']
-      @facets << @result['facets']['contributor']['terms']
-      @facets << @result['facets']['rights']['terms']
+      @facets= @result['facets']
+
       @result['hits']['hits'].each do |item|
         item['_source']['body'] = item['highlight']['body'][0] unless item['highlight']['body'].nil?
         item['_source']['title'] = item['highlight']['title'][0] unless item['highlight']['title'].nil?
@@ -62,7 +57,7 @@ class OaiController < ApplicationController
             creator: {terms: {field: 'creator.untouched'}},
             contributor: {terms: {field: 'contributor.untouched'}},
             rights: {terms: {field: 'rights'}},
-            histo1: {
+            histol: {
                 date_histogram: {
                     field: 'harvest_time',
                     interval: 'minute'

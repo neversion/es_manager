@@ -9,17 +9,7 @@
   </div>
   <div class="row">
     <div class="span3">
-      <% if !@facets.nil? %>
-            <ul class="tabbox">
-              <li class="menu1">搜索 - 分类结果</li>
-              <% @facets.each do |facet| %>
-                  <% facet.each do |item| %>
-                      <li><%= item['term'] %>
-                        : <%= item['count'] %></li>
-                  <% end %>
-              <% end %>
-            </ul>
-      <% end %>
+      <%= render "facets" %>
     </div>
     <div class="span9">
 
