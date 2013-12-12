@@ -23,7 +23,7 @@ class OaiController < ApplicationController
       @facets=[]
       @facets << @result['facets']['publisher']['terms']
       @facets << @result['facets']['subject']['terms']
-      @facets << @result['facets']['date']['terms']
+      @facets << @result['facets']['histo1']['terms']
       @facets << @result['facets']['creator']['terms']
       @facets << @result['facets']['contributor']['terms']
       @facets << @result['facets']['rights']['terms']
@@ -59,10 +59,15 @@ class OaiController < ApplicationController
         facets: {
             publisher: {terms: {field: 'publisher.untouched'}},
             subject: {terms: {field: 'subject.untouched'}},
-            date: {terms: {field: 'date'}},
             creator: {terms: {field: 'creator.untouched'}},
             contributor: {terms: {field: 'contributor.untouched'}},
-            rights: {terms: {field: 'rights'}}
+            rights: {terms: {field: 'rights'}},
+            histo1: {
+                date_histogram: {
+                    field: 'harvest_time',
+                    interval: 'minute'
+                }
+            }
         },
         "highlight" => {
             "pre_tags" => [
@@ -85,20 +90,6 @@ class OaiController < ApplicationController
       body_json[:filter]= {
           "term" => {"cat_id" => filter_id}
       }
-      #body_json = {
-      #    #"filtered" => {
-      #        :query => {"query_string" => {"query" => "'#{q}"}},
-      #        size: size, #每次返回结果数量
-      #        from: (page-1)*size, #偏移量 用于分页
-      #        facets: {
-      #            type_id: {terms: {field: 'type_id'}},
-      #            cat_id: {terms: {field: 'cat_id'}}
-      #        },
-      #        :filter => {
-      #                    "term"=>{"cat_id"=>filter_id}
-      #                }
-      #    }
-      ##}
     end
 
     @client.search index: 'oai_ik_stem_2', body: body_json
