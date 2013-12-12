@@ -1,3 +1,5 @@
 require "#{Rails.root}/db/oai_import.rb"
-#create_index_mapping "oai_ik_stem_2"
-import_oai_test_data "oai_ik_stem_2","/hd/metadata/data/guji"
+require 'benchmark'
+
+#create_index_mapping "oai_ik_stem_all"
+puts Benchmark.measure{ import_oai_test_data "oai_ik_stem_all","/hd/metadata/data/apabi" }
