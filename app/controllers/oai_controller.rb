@@ -23,10 +23,11 @@ class OaiController < ApplicationController
       @facets= @result['facets']
 
       @result['hits']['hits'].each do |item|
-        item['_source']['body'] = item['highlight']['body'][0] unless item['highlight']['body'].nil?
-        item['_source']['title'] = item['highlight']['title'][0] unless item['highlight']['title'].nil?
+        if item['highlight']
+          item['_source']['body'] = item['highlight']['body'][0] unless item['highlight']['body'].nil?
+          item['_source']['title'] = item['highlight']['title'][0] unless item['highlight']['title'].nil?
+        end
         @list << item['_source']
-
       end
     else
       #最新公告
