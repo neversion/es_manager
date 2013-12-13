@@ -162,7 +162,7 @@ def import_bulk index_name, path
         #body_json["date"] = "1000-00-00"
       end
 
-      if data_array.count<2000
+      if data_array.count<1500
         data_array<< {index: {_index: index_name, _type: 'item', data: body_json}}
       else
         begin
