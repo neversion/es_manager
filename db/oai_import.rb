@@ -128,6 +128,7 @@ def import_bulk index_name, path
   @client = Elasticsearch::Client.new host: host, log: true
 
   data_array=[]
+  bulk_count=0
   (2..file_name_list.count-1).each do |index|
     file_path = "#{path}/#{file_name_list[index]}"
     File.open file_path do |file|
@@ -161,19 +162,20 @@ def import_bulk index_name, path
         #body_json["date"] = "1000-00-00"
       end
 
-      if data_array.count<1000
+      if data_array.count<2000
         data_array<< {index: {_index: index_name, _type: 'item', data: body_json}}
       else
         begin
           @client.bulk body: data_array
           data_array.clear
+          bulk_count +=1
+          puts bulk_count
         rescue Exception => e
           WORKER_LOG.error e.message
           WORKER_LOG.error data_array
         end
       end
     end
-    puts index
   end
 
 end
