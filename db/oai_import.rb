@@ -6,7 +6,7 @@ def create_index_mapping index_name
                              settings: {
                                  index: {
                                      number_of_shards: 5,
-                                     number_of_replicas: 2,
+                                     number_of_replicas: 1,
                                  }
                              },
                              mappings: {
