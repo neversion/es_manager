@@ -1,0 +1,47 @@
+<div class="container">
+  <h1>Oai#s</h1>
+
+  <div>
+    <%= form_tag oai_s_path, method: 'get' do %>
+        <%= text_field_tag :q %>
+        <%= submit_tag "搜索" %>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="span3">
+      <%= render "facets" %>
+    </div>
+    <div class="span9">
+
+      <% if !@list.nil? %>
+          <ul class="results">
+            <% @list.each do |item| %>
+                <li class="record">
+                  <div class="title"><a target="_blank" href='<%= item['url'] %>'><%= sanitize item['title'] %></a>
+                    <span id="resultRp_ctl01_TimeLb" class="time"><%= parse_time(item['harvest_time']) %></span>
+                  </div>
+                  <div class="body">
+                    <div><%= sanitize item['creator'] %></div>
+                    <div><%= sanitize item['subject'] %></div>
+                    <div><%= sanitize item['descripton'] %></div>
+                    <div><%= sanitize item['contributor'] %></div>
+                    <div><%= sanitize item['origin_date'] %></div>
+                    <div><%= sanitize item['publisher'] %></div>
+                    <div><%= sanitize item['type'] %></div>
+                    <div><%= sanitize item['format'] %></div>
+                    <div><%= sanitize item['identifier'] %></div>
+                    <div><%= sanitize item['source'] %></div>
+                    <div><%= sanitize item['language'] %></div>
+                    <div><%= sanitize item['relation'] %></div>
+                    <div><%= sanitize item['coverage'] %></div>
+                    <div><%= sanitize item['rights'] %></div>
+                    <div><%= sanitize item['harvest_time'] %></div>
+
+                  </div>
+                </li>
+            <% end %>
+          </ul>
+      <% end %>
+    </div>
+  </div>
+</div>

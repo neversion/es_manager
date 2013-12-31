@@ -1,0 +1,22 @@
+<% if !@facets.nil? %>
+    <ul class="tabbox">
+      <li class="menu1">搜索 - 分类结果</li>
+      <% @facets.each do |facet| %>
+          <li>
+            <ul>
+              <li><%= facet[0] %></li>
+              <% case facet[0] %>
+              <% when "histol" %>
+                  <% facet[1]['entries'].each do |item| %>
+                      <li><a href="<%= oai_gen_facet_url(facet[0],item['time']) %>"><%= parse_timestamp item['time']/1000 %>: <%= item['count'] %></a></li>
+                  <% end %>
+               <% else %>
+                  <% facet[1]['terms'].each do |item| %>
+                      <li><a href="<%= oai_gen_facet_url(facet[0],item['time']) %>"><%=  item['term'] %>: <%= item['count'] %></a></li>
+                  <% end %>
+              <% end %>
+            </ul>
+          </li>
+      <% end %>
+    </ul>
+<% end %>

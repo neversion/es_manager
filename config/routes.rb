@@ -1,4 +1,5 @@
 EsManager::Application.routes.draw do
+  get "oai/s"
   match "main/s" => "main#s", via: [:get, :post]
   #post "main/s"
 
