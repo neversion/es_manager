@@ -120,59 +120,58 @@ def get_field_value xml_doc, xpath
 end
 
 def import_bulk index_name, path
-  file_name_list=[]
-  Dir.foreach(path) do |file|
-    file_name_list << file
-  end
   host = "http://210.34.4.113:9200"
   @client = Elasticsearch::Client.new host: host, log: true
 
   data_array=[]
   bulk_count=0
-  (2..file_name_list.count-1).each do |index|
-    file_path = "#{path}/#{file_name_list[index]}"
-    File.open file_path do |file|
-      xml_str=''
-      file.each_line do |line|
-        xml_str = xml_str+line
-      end
-      xml_doc = Nokogiri::XML(xml_str)
-      body_json = {
-          "title" => get_field_value(xml_doc, '//dc:title'),
-          "creator" => get_field_value(xml_doc, '//dc:creator'),
-          "subject" => get_field_value(xml_doc, '//dc:subject'),
-          "description" => get_field_value(xml_doc, '//dc:description'),
-          "contributor" => get_field_value(xml_doc, '//dc:contributor'),
-          "origin_date" => get_field_value(xml_doc, '//dc:date'),
-          "publisher" => get_field_value(xml_doc, '//dc:publisher'),
-          "type" => get_field_value(xml_doc, '//dc:type'),
-          "format" => get_field_value(xml_doc, '//dc:format'),
-          "identifier" => get_field_value(xml_doc, '//dc:identifier'),
-          "source" => get_field_value(xml_doc, '//dc:source'),
-          "language" => get_field_value(xml_doc, '//dc:language'),
-          "relation" => get_field_value(xml_doc, '//dc:relation'),
-          "coverage" => get_field_value(xml_doc, '//dc:coverage'),
-          "rights" => get_field_value(xml_doc, '//dc:rights'),
-          "harvest_time" => Time.now
-      }
+  Dir.foreach(path) do |file_name|
+    if file_name!=".." && file_name!="."
+      file_path = "#{path}/#{file_name}"
+      File.open file_path do |file|
+        xml_str=''
+        file.each_line do |line|
+          xml_str = xml_str+line
+        end
+        xml_doc = Nokogiri::XML(xml_str)
+        body_json = {
+            "title" => get_field_value(xml_doc, '//dc:title'),
+            "creator" => get_field_value(xml_doc, '//dc:creator'),
+            "subject" => get_field_value(xml_doc, '//dc:subject'),
+            "description" => get_field_value(xml_doc, '//dc:description'),
+            "contributor" => get_field_value(xml_doc, '//dc:contributor'),
+            "origin_date" => get_field_value(xml_doc, '//dc:date'),
+            "publisher" => get_field_value(xml_doc, '//dc:publisher'),
+            "type" => get_field_value(xml_doc, '//dc:type'),
+            "format" => get_field_value(xml_doc, '//dc:format'),
+            "identifier" => get_field_value(xml_doc, '//dc:identifier'),
+            "source" => get_field_value(xml_doc, '//dc:source'),
+            "language" => get_field_value(xml_doc, '//dc:language'),
+            "relation" => get_field_value(xml_doc, '//dc:relation'),
+            "coverage" => get_field_value(xml_doc, '//dc:coverage'),
+            "rights" => get_field_value(xml_doc, '//dc:rights'),
+            "harvest_time" => Time.now
+        }
 
-      begin
-        body_json["date"] = Date.parse(xml_doc.xpath('//dc:date').text) unless xml_doc.xpath('//dc:date').text==''
-      rescue
-        #body_json["date"] = "1000-00-00"
-      end
-
-      if data_array.count<1500
-        data_array<< {index: {_index: index_name, _type: 'item', data: body_json}}
-      else
         begin
-          @client.bulk body: data_array
-          data_array.clear
-          bulk_count +=1
-          puts bulk_count
-        rescue Exception => e
-          WORKER_LOG.error e.message
-          WORKER_LOG.error data_array
+          body_json["date"] = Date.parse(xml_doc.xpath('//dc:date').text) unless xml_doc.xpath('//dc:date').text==''
+        rescue
+          #body_json["date"] = "1000-00-00"
+        end
+
+        if data_array.count<1500
+          data_array<< {index: {_index: index_name, _type: 'item', data: body_json}}
+        else
+          begin
+            binding.pry
+            @client.bulk body: data_array
+            data_array.clear
+            bulk_count +=1
+            puts bulk_count
+          rescue Exception => e
+            WORKER_LOG.error e.message
+            WORKER_LOG.error data_array
+          end
         end
       end
     end
