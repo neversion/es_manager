@@ -45,6 +45,7 @@ class MainController < ApplicationController
   def search_with_facet q, page, size, sort_field, filter_id
     host = "http://210.34.4.113:9200"
     @client = Elasticsearch::Client.new host: host, log: true
+
     body_json = {
         "explain" => true,
         :query => {"query_string" =>
@@ -77,21 +78,8 @@ class MainController < ApplicationController
       body_json[:filter]= {
           "term" => {"cat_id" => filter_id}
       }
-      #body_json = {
-      #    #"filtered" => {
-      #        :query => {"query_string" => {"query" => "'#{q}"}},
-      #        size: size, #每次返回结果数量
-      #        from: (page-1)*size, #偏移量 用于分页
-      #        facets: {
-      #            type_id: {terms: {field: 'type_id'}},
-      #            cat_id: {terms: {field: 'cat_id'}}
-      #        },
-      #        :filter => {
-      #                    "term"=>{"cat_id"=>filter_id}
-      #                }
-      #    }
-      ##}
     end
+
 
     @client.search index: 'znss', body: body_json
   end

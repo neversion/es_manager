@@ -62,6 +62,7 @@ def import_oai_test_data index_name, path
 
   (2..file_name_list.count-1).each do |index|
     file_path = "#{path}/#{file_name_list[index]}"
+    begin
     File.open file_path do |file|
       xml_str=''
       file.each_line do |line|
@@ -96,9 +97,12 @@ def import_oai_test_data index_name, path
       begin
         @client.index index: index_name, type: 'item', body: body_json
       rescue Exception => e
-        WORKER_LOG.error e.message
-        WORKER_LOG.error file_path
+        WORKER_LOG.error "[INDEX error] #{e.message}"
       end
+    end
+    rescue Exception=>file_e
+      WORKER_LOG.error "[FILE error] #{file_e.message}"
+      WORKER_LOG.error file_path
     end
     puts index
   end
