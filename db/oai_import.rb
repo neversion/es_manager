@@ -126,7 +126,8 @@ def import_bulk index_name, path
   data_array=[]
   bulk_count=0
   Dir.foreach(path) do |file_name|
-    if file_name!=".." && file_name!="."
+#binding.pry    
+if file_name!=".." && file_name!="."
       file_path = "#{path}/#{file_name}"
       File.open file_path do |file|
         xml_str=''
@@ -163,7 +164,7 @@ def import_bulk index_name, path
           data_array<< {index: {_index: index_name, _type: 'item', data: body_json}}
         else
           begin
-            binding.pry
+            #binding.pry
             @client.bulk body: data_array
             data_array.clear
             bulk_count +=1
