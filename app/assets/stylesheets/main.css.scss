@@ -98,6 +98,7 @@ ol {
 
 ul {
   list-style:square;
+  margin:auto;
 }
 
 li {
@@ -1416,10 +1417,22 @@ ul.res li.ejounal {
   background-repeat:no-repeat;
   color:transparent;
 }
+ul.tabbox{
+  margin:auto;
+}
+#OrderUl{
+  margin-top:10px;
+}
 
+ul.results{
+  margin:auto;
+}
 .caption1 {
   text-align:left;
   font-weight:400;
+}
+.tab_option form{
+  margin:0 0;
 }
 
 #container {
