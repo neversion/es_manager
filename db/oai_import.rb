@@ -182,3 +182,13 @@ def import_bulk index_name, path
   end
 
 end
+
+
+def traverse_all_path
+
+
+end
+
+def in_dir
+
+end
